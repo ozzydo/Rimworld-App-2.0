@@ -17,6 +17,7 @@ let BestNameListofSkills={}
 let NumberOfBestPawnOfSkills=2
 let BestSkillListofPawns={}
 let NumberOfBestSkillsOfPawns=3
+let SkillLevelList={}
 //Global Variables
 
 //Pawn Info update from main page
@@ -59,9 +60,15 @@ console.log("BestNameListofSkills")
 //Finding Name of Best Pawns of Skills
 
 //Finding Skills Names of Best Skills of Pawns
-BestSkillListofPawns=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,2)
+BestSkillListofPawns=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,1)
 console.log(BestSkillListofPawns)
 console.log("BestSkillListofPawns")
+//Finding Skills Names of Best Skills of Pawns
+
+//Finding Skills Names of Best Skills of Pawns
+SkillLevelList=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,2)
+console.log(SkillLevelList)
+console.log("SkillLevelList")
 //Finding Skills Names of Best Skills of Pawns
 
 //functions
@@ -187,13 +194,29 @@ function BestNameList(ObjectGiven3,ObjectGiven4,Cycle3,Cycle4,Mode){
     let BestNameListObject={}
     let CurrentNamesArray=[]
     let OutputNameArray=[]
+    let BestSkillListObject={}
+    let CurrentSkillsArray=[]
+    let OutputSkillArray=[]
     for(let x=0;x<Cycle3;x++){
         CurrentNamesArray=ObjectGiven3[x]
+        if(Cycle3==Object.keys(NameOfPawn).length){
+            CurrentSkillsArray=SkillsOfPawns[x]
+        }
         for(let a=0;a<Cycle4;a++){
             OutputNameArray[a]=ObjectGiven4[CurrentNamesArray[a]]
+            if(Cycle3==Object.keys(NameOfPawn).length){
+                OutputSkillArray[a]=CurrentSkillsArray[CurrentNamesArray[a]]
+            }
         }
         BestNameListObject[x]=OutputNameArray
         OutputNameArray=[]
+        BestSkillListObject[x]=OutputSkillArray
+        OutputSkillArray=[]
     }
-    return BestNameListObject
+    if(Mode==1){
+        return BestNameListObject
+    }
+    if(Mode==2){
+        return BestSkillListObject
+    }
 }
