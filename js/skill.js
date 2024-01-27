@@ -31,44 +31,44 @@ SkillArrayCreator()
 
 //Grade SkillArray
 SkillGrades=Grader_Skills(SkillArray,NumberOfSkills)
-console.log(SkillGrades)
-console.log("SkillGrades")
+//console.log(SkillGrades)
+//console.log("SkillGrades")
 //Grade SkillArray
 
 //Grade SkillsOfPawns
 PawnsSkillGrades=Grader_Skills(SkillsOfPawns,Object.keys(NameOfPawn).length)
-console.log(PawnsSkillGrades)
-console.log("PawnsSkillGrades")
+//console.log(PawnsSkillGrades)
+//console.log("PawnsSkillGrades")
 //Grade SkillsOfPawns
 
 //Ordering Grades of Skills
 SkillGradesOrdered=GradeOrderer(SkillGrades,NumberOfSkills)
-console.log(SkillGradesOrdered)
-console.log("SkillGradesOrdered")
+//console.log(SkillGradesOrdered)
+//console.log("SkillGradesOrdered")
 //Ordering Grades of Skills
 
 //Ordering Grades of Pawn's Skills
 PawnsSkillGradesOrdered=GradeOrderer(PawnsSkillGrades,Object.keys(NameOfPawn).length)
-console.log(PawnsSkillGradesOrdered)
-console.log("PawnsSkillGradesOrdered")
+//console.log(PawnsSkillGradesOrdered)
+//console.log("PawnsSkillGradesOrdered")
 //Ordering Grades of Pawn's Skills
 
 //Finding Name of Best Pawns of Skills
 BestNameListofSkills=BestNameList(SkillGradesOrdered,NameOfPawn,NumberOfSkills,NumberOfBestPawnOfSkills,1)
-console.log(BestNameListofSkills)
-console.log("BestNameListofSkills")
+//console.log(BestNameListofSkills)
+//console.log("BestNameListofSkills")
 //Finding Name of Best Pawns of Skills
 
 //Finding Skills Names of Best Skills of Pawns
 BestSkillListofPawns=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,1)
-console.log(BestSkillListofPawns)
-console.log("BestSkillListofPawns")
+//console.log(BestSkillListofPawns)
+//console.log("BestSkillListofPawns")
 //Finding Skills Names of Best Skills of Pawns
 
 //Finding Skills Names of Best Skills of Pawns
 SkillLevelList=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,2)
-console.log(SkillLevelList)
-console.log("SkillLevelList")
+//console.log(SkillLevelList)
+//console.log("SkillLevelList")
 //Finding Skills Names of Best Skills of Pawns
 
 //functions
