@@ -1,5 +1,6 @@
 //Get Element
-
+let UpdateButtonSkill=document.getElementById('UpdateButtonSkills')
+let UpdateButtonPawns=document.getElementById('UpdateButtonPawns')
 //Get Element
 
 //Global Variables
@@ -71,7 +72,10 @@ SkillLevelList=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOf
 //console.log("SkillLevelList")
 //Finding Skills Names of Best Skills of Pawns
 
-
+//Event Listeners
+UpdateButtonSkill.addEventListener("click",InnerTextChanger)
+UpdateButtonPawns.addEventListener("click",ElementCreator)
+//Event Listeners
 
 //functions
 function LocalStorageGettingMainPage(){
@@ -221,6 +225,10 @@ function BestNameList(ObjectGiven3,ObjectGiven4,Cycle3,Cycle4,Mode){
     if(Mode==2){
         return BestSkillListObject
     }
+}
+
+function InnerTextChanger(){
+    console.log("I am here")
 }
 
 function ElementCreator(){
