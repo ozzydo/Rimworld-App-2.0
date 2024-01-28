@@ -1,6 +1,8 @@
 //Get Element
 let UpdateButtonSkill=document.getElementById('UpdateButtonSkills')
 let UpdateButtonPawns=document.getElementById('UpdateButtonPawns')
+
+const ListBody=document.querySelectorAll(".listbody")
 //Get Element
 
 //Global Variables
@@ -19,6 +21,8 @@ let NumberOfBestPawnOfSkills=2
 let BestSkillListofPawns={}
 let NumberOfBestSkillsOfPawns=3
 let SkillLevelList={}
+
+
 //Global Variables
 
 //Pawn Info update from main page
@@ -68,13 +72,13 @@ BestSkillListofPawns=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(
 
 //Finding Skills Names of Best Skills of Pawns
 SkillLevelList=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,2)
-//console.log(SkillLevelList)
-//console.log("SkillLevelList")
+console.log(SkillLevelList)
+console.log("SkillLevelList")
 //Finding Skills Names of Best Skills of Pawns
 
 //Event Listeners
-UpdateButtonSkill.addEventListener("click",SkillCardGenerator)
-UpdateButtonPawns.addEventListener("click",PawnCardGenerator)
+UpdateButtonSkill.addEventListener("click",ElementCreator(1))
+UpdateButtonPawns.addEventListener("click",ElementCreator(2))
 //Event Listeners
 
 //functions
@@ -227,10 +231,65 @@ function BestNameList(ObjectGiven3,ObjectGiven4,Cycle3,Cycle4,Mode){
     }
 }
 
-function SkillCardGenerator(){
-    
-}
+function ElementCreator(Mode){
+    if(Mode==1){
+            let InternalName=""
+            let InternalLevel=0
+        if(Object.keys(BestNameListofSkills).length>0){
 
-function PawnCardGenerator(){
-    console.log("I am here")
+            let LiList=document.querySelectorAll('.a')
+
+            for(var x=0;x<LiList.length;x++){
+                LiList[x].remove(LiList.firstChild)
+                //console.log("I was here")
+                }
+
+            for(let i=0;i<NumberOfSkills;i++){
+                InternalName=BestNameListofSkills[i]
+                InternalLevel=SkillLevelList[i]
+
+                //console.log(InternalName)
+                console.log(InternalLevel)
+
+                for(let a=0;a<NumberOfBestPawnOfSkills;a++){
+                    let Li= document.createElement('li')
+                    Li.classList.add('list-group-item')
+                    Li.classList.add('d-flex')
+                    Li.classList.add('justify-content-between')
+                    Li.classList.add('align-items-start')
+                    Li.classList.add('a')
+                    console.log(ListBody)
+                    ListBody[i].append(Li)
+
+                    let UpperDiv= document.createElement('div')
+                    UpperDiv.classList.add('ms-2')
+                    UpperDiv.classList.add('me-auto')
+                    Li.append(UpperDiv)
+
+                    let InnerDiv= document.createElement('div')
+                    InnerDiv.classList.add('fw-bold')
+                    UpperDiv.append(InnerDiv)
+
+                    let Span= document.createElement('span')
+                    Span.innerHTML = `${InternalName[a]}`
+                    InnerDiv.append(Span)
+
+                    let SpanButton= document.createElement('span')
+                    SpanButton.classList.add('badge')
+                    SpanButton.classList.add('bg-success')
+                    SpanButton.classList.add('rounded-pill')
+                    //SpanButton.classList.add('btn')
+                    //SpanButton.classList.add('btn-outline-danger')
+                    //SpanButton.classList.add('btn-sm')
+                    //SpanButton.setAttribute('id',i)
+                    SpanButton.innerHTML = `${InternalLevel[a]}`
+                    Li.append(SpanButton)
+                }
+            }
+
+        }
+    }
+    else if(Mode==2){
+
+    }
 }
