@@ -59,21 +59,21 @@ PawnsSkillGradesOrdered=GradeOrderer(PawnsSkillGrades,Object.keys(NameOfPawn).le
 //Ordering Grades of Pawn's Skills
 
 //Finding Name of Best Pawns of Skills
-BestNameListofSkills=BestNameList(SkillGradesOrdered,NameOfPawn,NumberOfSkills,NumberOfBestPawnOfSkills,1)
+BestNameListofSkills=BestNameList(SkillGradesOrdered,NameOfPawn,0,NumberOfSkills,NumberOfBestPawnOfSkills,0,1)
 //console.log(BestNameListofSkills)
 //console.log("BestNameListofSkills")
 //Finding Name of Best Pawns of Skills
 
 //Finding Skills Names of Best Skills of Pawns
-BestSkillListofPawns=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,1)
+BestSkillListofPawns=BestNameList(PawnsSkillGradesOrdered,SkillList,0,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,0,1)
 //console.log(BestSkillListofPawns)
 //console.log("BestSkillListofPawns")
 //Finding Skills Names of Best Skills of Pawns
 
 //Finding Skills Names of Best Skills of Pawns
-SkillLevelList=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,2)
-console.log(SkillLevelList)
-console.log("SkillLevelList")
+SkillLevelList=BestNameList(PawnsSkillGradesOrdered,SkillsOfPawns,SkillGradesOrdered,NumberOfSkills,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,2)
+//console.log(SkillLevelList)
+//console.log("SkillLevelList")
 //Finding Skills Names of Best Skills of Pawns
 
 //Event Listeners
@@ -200,33 +200,68 @@ function GradeOrderer(ObjectGiven2,Cycle2){
     return GradeOrderObject  
 }
 
-function BestNameList(ObjectGiven3,ObjectGiven4,Cycle3,Cycle4,Mode){
+function BestNameList(ObjectGiven3,ObjectGiven4,ObjectGiven5,Cycle3,Cycle4,Cycle5,Mode){
     let BestNameListObject={}
     let CurrentNamesArray=[]
     let OutputNameArray=[]
     let BestSkillListObject={}
     let CurrentSkillsArray=[]
     let OutputSkillArray=[]
+    let CurrentSkillOfPawnArray=[]
+    let HoldingIndex=0
+    let HoldingIndexOfPawn=0
+    let CurrentPawnIndex=[]
     for(let x=0;x<Cycle3;x++){
-        CurrentNamesArray=ObjectGiven3[x]
-        if(Cycle3==Object.keys(NameOfPawn).length){
-            CurrentSkillsArray=SkillsOfPawns[x]
-        }
-        for(let a=0;a<Cycle4;a++){
-            OutputNameArray[a]=ObjectGiven4[CurrentNamesArray[a]]
-            if(Cycle3==Object.keys(NameOfPawn).length){
-                OutputSkillArray[a]=CurrentSkillsArray[CurrentNamesArray[a]]
+        if(Mode==1){
+            CurrentNamesArray=ObjectGiven3[x]
+            for(let a=0;a<Cycle4;a++){
+                OutputNameArray[a]=ObjectGiven4[CurrentNamesArray[a]]
             }
         }
+
+        if(Mode==2){
+            CurrentPawnIndex=ObjectGiven5[x]
+                //console.log(CurrentPawnIndex)
+                //console.log("CurrentPawnIndex")
+            for(let a=0;a<Cycle4;a++){
+                HoldingIndexOfPawn=CurrentPawnIndex[a]
+                    //console.log(HoldingIndexOfPawn)
+                    //console.log("HoldingIndexOfPawn")
+                CurrentSkillArray=ObjectGiven3[HoldingIndexOfPawn]
+                    //console.log(CurrentSkillArray)
+                    //console.log("CurrentSkillArray")
+                CurrentSkillOfPawnArray=ObjectGiven4[a]
+                    console.log(CurrentSkillOfPawnArray)
+                    console.log("CurrentSkillOfPawnArray")
+                for(let b=0;b<Cycle5;b++){
+                    HoldingIndex=CurrentSkillArray[b]
+                        console.log(HoldingIndex)
+                        console.log("HoldingIndex")
+                    OutputSkillArray[b]=CurrentSkillOfPawnArray[HoldingIndex]
+                        console.log(OutputSkillArray)
+                        console.log("OutputSkillArray")
+                }
+                
+               
+            }
+            BestSkillListObject[x]=OutputSkillArray
+                console.log(BestSkillListObject)
+                console.log("BestSkillListObject")
+        }
+
+
         BestNameListObject[x]=OutputNameArray
         OutputNameArray=[]
-        BestSkillListObject[x]=OutputSkillArray
+        
         OutputSkillArray=[]
+        CurrentSkillOfPawnArray=[]
+        HoldingIndex=0
     }
+    
     if(Mode==1){
         return BestNameListObject
     }
-    if(Mode==2){
+    else if(Mode==2){
         return BestSkillListObject
     }
 }
@@ -249,7 +284,7 @@ function ElementCreator(Mode){
                 InternalLevel=SkillLevelList[i]
 
                 //console.log(InternalName)
-                console.log(InternalLevel)
+                //console.log(InternalLevel)
 
                 for(let a=0;a<NumberOfBestPawnOfSkills;a++){
                     let Li= document.createElement('li')
@@ -258,7 +293,7 @@ function ElementCreator(Mode){
                     Li.classList.add('justify-content-between')
                     Li.classList.add('align-items-start')
                     Li.classList.add('a')
-                    console.log(ListBody)
+                    //console.log(ListBody)
                     ListBody[i].append(Li)
 
                     let UpperDiv= document.createElement('div')
