@@ -17,13 +17,14 @@ let PawnsSkillGrades={}
 let SkillGradesOrdered={}
 let PawnsSkillGradesOrdered={}
 let BestNameListofSkills={}
-let NumberOfBestPawnOfSkills=2
+let NumberOfBestPawnOfSkills=1
 let BestSkillListofPawns={}
-let NumberOfBestSkillsOfPawns=3
-let SkillLevelList={}
+let NumberOfBestSkillsOfPawns=2
+let SkillLevelList={"0":[0],"1":[0],"2":[0],"3":[0],"4":[0],"5":[0],"6":[0],"7":[0],"8":[0],"9":[0],"10":[0],"11":[0],}
 
 
 //Global Variables
+
 
 //Pawn Info update from main page
 LocalStorageGettingMainPage()
@@ -60,25 +61,26 @@ PawnsSkillGradesOrdered=GradeOrderer(PawnsSkillGrades,Object.keys(NameOfPawn).le
 
 //Finding Name of Best Pawns of Skills
 BestNameListofSkills=BestNameList(SkillGradesOrdered,NameOfPawn,NumberOfSkills,NumberOfBestPawnOfSkills,1)
-//console.log(BestNameListofSkills)
-//console.log("BestNameListofSkills")
+console.log(BestNameListofSkills)
+console.log("BestNameListofSkills")
 //Finding Name of Best Pawns of Skills
 
 //Finding Skills Names of Best Skills of Pawns
 BestSkillListofPawns=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,1)
-//console.log(BestSkillListofPawns)
-//console.log("BestSkillListofPawns")
+console.log(BestSkillListofPawns)
+console.log("BestSkillListofPawns")
 //Finding Skills Names of Best Skills of Pawns
 
 //Finding Skills Names of Best Skills of Pawns
-SkillLevelList=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,2)
+//SkillLevelList=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,2)
+SkillLevelGetter()
 console.log(SkillLevelList)
 console.log("SkillLevelList")
 //Finding Skills Names of Best Skills of Pawns
 
 //Event Listeners
-UpdateButtonSkill.addEventListener("click",ElementCreator(1))
-UpdateButtonPawns.addEventListener("click",ElementCreator(2))
+UpdateButtonSkill.addEventListener("click",ElementCreator())
+UpdateButtonPawns.addEventListener("click",ElementCreator)
 //Event Listeners
 
 //functions
@@ -204,35 +206,21 @@ function BestNameList(ObjectGiven3,ObjectGiven4,Cycle3,Cycle4,Mode){
     let BestNameListObject={}
     let CurrentNamesArray=[]
     let OutputNameArray=[]
-    let BestSkillListObject={}
-    let CurrentSkillsArray=[]
-    let OutputSkillArray=[]
     for(let x=0;x<Cycle3;x++){
         CurrentNamesArray=ObjectGiven3[x]
-        if(Cycle3==Object.keys(NameOfPawn).length){
-            CurrentSkillsArray=SkillsOfPawns[x]
-        }
         for(let a=0;a<Cycle4;a++){
             OutputNameArray[a]=ObjectGiven4[CurrentNamesArray[a]]
-            if(Cycle3==Object.keys(NameOfPawn).length){
-                OutputSkillArray[a]=CurrentSkillsArray[CurrentNamesArray[a]]
-            }
         }
         BestNameListObject[x]=OutputNameArray
         OutputNameArray=[]
-        BestSkillListObject[x]=OutputSkillArray
-        OutputSkillArray=[]
     }
-    if(Mode==1){
+
         return BestNameListObject
-    }
-    if(Mode==2){
-        return BestSkillListObject
-    }
+    
 }
 
-function ElementCreator(Mode){
-    if(Mode==1){
+function ElementCreator(){
+  
             let InternalName=""
             let InternalLevel=0
         if(Object.keys(BestNameListofSkills).length>0){
@@ -246,10 +234,10 @@ function ElementCreator(Mode){
 
             for(let i=0;i<NumberOfSkills;i++){
                 InternalName=BestNameListofSkills[i]
-                InternalLevel=SkillLevelList[i]
+  
 
                 //console.log(InternalName)
-                console.log(InternalLevel)
+  
 
                 for(let a=0;a<NumberOfBestPawnOfSkills;a++){
                     let Li= document.createElement('li')
@@ -258,7 +246,7 @@ function ElementCreator(Mode){
                     Li.classList.add('justify-content-between')
                     Li.classList.add('align-items-start')
                     Li.classList.add('a')
-                    console.log(ListBody)
+                    //console.log(ListBody)
                     ListBody[i].append(Li)
 
                     let UpperDiv= document.createElement('div')
@@ -282,14 +270,22 @@ function ElementCreator(Mode){
                     //SpanButton.classList.add('btn-outline-danger')
                     //SpanButton.classList.add('btn-sm')
                     //SpanButton.setAttribute('id',i)
-                    SpanButton.innerHTML = `${InternalLevel[a]}`
                     Li.append(SpanButton)
                 }
             }
 
         }
-    }
-    else if(Mode==2){
+}
 
+function SkillLevelGetter(){
+    let MiddleArray=[]
+    for(let a=0;a<NumberOfSkills;a++){
+        //console.log(a)
+        for(let b=0;b<NumberOfBestSkillsOfPawns;b++){
+            MiddleArray[b]=SkillsOfPawns[SkillGradesOrdered[a][b]][a]   
+        }
+        SkillLevelList[a]=MiddleArray
+        //console.log(SkillLevelList)
+        MiddleArray=[]
     }
 }
