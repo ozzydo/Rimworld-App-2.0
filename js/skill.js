@@ -3,6 +3,8 @@ let UpdateButtonSkill=document.getElementById('UpdateButtonSkills')
 let UpdateButtonPawns=document.getElementById('UpdateButtonPawns')
 
 const ListBody=document.querySelectorAll(".listbody")
+
+let TopRow=document.getElementById('toprow')
 //Get Element
 
 //Global Variables
@@ -17,12 +19,12 @@ let PawnsSkillGrades={}
 let SkillGradesOrdered={}
 let PawnsSkillGradesOrdered={}
 let BestNameListofSkills={}
-let NumberOfBestPawnOfSkills=4
+let NumberOfBestPawnOfSkills=2
 let BestSkillListofPawns={}
 let NumberOfBestSkillsOfPawns=2
 let SkillLevelList={"0":[0],"1":[0],"2":[0],"3":[0],"4":[0],"5":[0],"6":[0],"7":[0],"8":[0],"9":[0],"10":[0],"11":[0],}
 let FlameLevelList={"0":[0],"1":[0],"2":[0],"3":[0],"4":[0],"5":[0],"6":[0],"7":[0],"8":[0],"9":[0],"10":[0],"11":[0],}
-
+let IndexOfBestSkillOfPawns={}
 //Global Variables
 
 
@@ -55,8 +57,8 @@ SkillGradesOrdered=GradeOrderer(SkillGrades,NumberOfSkills)
 
 //Ordering Grades of Pawn's Skills
 PawnsSkillGradesOrdered=GradeOrderer(PawnsSkillGrades,Object.keys(NameOfPawn).length)
-//console.log(PawnsSkillGradesOrdered)
-//console.log("PawnsSkillGradesOrdered")
+console.log(PawnsSkillGradesOrdered)
+console.log("PawnsSkillGradesOrdered")
 //Ordering Grades of Pawn's Skills
 
 //Finding Name of Best Pawns of Skills
@@ -84,9 +86,15 @@ console.log(FlameLevelList)
 console.log("FlameLevelList")
 //Finding Flame Levels of Best Skills of Pawns
 
+//Finding Index of Best Skills of Pawns
+IndexOfBestSkillOfPawns=GetIndexOfBestSkillOfPawns()
+console.log(IndexOfBestSkillOfPawns)
+console.log("IndexOfBestSkillOfPawns")
+//Finding Index of Best Skills of Pawns
+
 //Event Listeners
 UpdateButtonSkill.addEventListener("click",ElementCreator())
-UpdateButtonPawns.addEventListener("click",ElementCreator)
+UpdateButtonPawns.addEventListener("click",CardCreator)
 //Event Listeners
 
 //functions
@@ -324,3 +332,139 @@ function FlameLevelGetter(){
         MiddleArray=[]
     }
 }
+
+function CardCreator(){
+    let InternalSkill=""
+    let InternalLevel=0
+    let InternalFlameLevel=0
+
+    if(Object.keys(BestSkillListofPawns).length>0){
+    
+        let Div=document.querySelectorAll('.Remove')
+    
+        for(var x=0;x<Div.length;x++){
+            Div[x].remove(Div.firstChild)
+            console.log("I was here")
+            }
+    
+            for(let i=0;i<Object.keys(NameOfPawn).length;i++){
+                InternalSkill=BestSkillListofPawns[i]
+                InternalLevel=SkillLevelList[i]
+                InternalFlameLevel=FlameLevelList[i]
+
+            
+    
+                for(let a=0;a<Object.keys(NameOfPawn).length;a++){
+
+                    let UpperDiv1=document.createElement('div')
+                    UpperDiv1.classList.add('col-3')
+                    UpperDiv1.classList.add('mb-2')
+                    UpperDiv1.classList.add('Remove')
+                    TopRow.append(UpperDiv1)
+
+                    let Card=document.createElement('div')
+                    Card.classList.add('card')
+                    UpperDiv1.append(Card)
+
+                    let CardBody=document.createElement('div')
+                    CardBody.classList.add('card-body')
+                    Card.append(CardBody)
+
+                    let CardTitle=document.createElement('h5')
+                    CardTitle.classList.add('card-title')
+                    CardTitle.innerHTML = `${NameOfPawn[a]}`
+                    CardBody.append(CardTitle)
+
+                    let CardSubtitle=document.createElement('p')
+                    CardSubtitle.classList.add('card-subtitle')
+                    CardSubtitle.classList.add('mb-2')
+                    CardSubtitle.classList.add('text-body-secondary')
+                    CardSubtitle.innerHTML = "Best Skills"
+                    CardBody.append(CardSubtitle)
+
+                    let LiGroup=document.createElement('ol')
+                    LiGroup.classList.add('list-group')
+                    LiGroup.classList.add('list-group-numbered')
+                    CardBody.append(LiGroup)
+
+                    for(let c=0;c<NumberOfBestSkillsOfPawns;c++){
+                        let Li= document.createElement('li')
+                        Li.classList.add('list-group-item')
+                        Li.classList.add('d-flex')
+                        Li.classList.add('justify-content-between')
+                        Li.classList.add('align-items-start')
+                        Li.classList.add('a')
+                        LiGroup.append(Li)
+
+                        let UpperDiv= document.createElement('div')
+                        UpperDiv.classList.add('ms-2')
+                        UpperDiv.classList.add('me-auto')
+                        Li.append(UpperDiv)
+
+                        let InnerDiv= document.createElement('div')
+                        InnerDiv.classList.add('fw-bold')
+                        UpperDiv.append(InnerDiv)
+
+                        let Span= document.createElement('span')
+                        Span.innerHTML = `${InternalSkill[c]}`
+                        InnerDiv.append(Span)
+
+                        let SpanButton= document.createElement('span')
+                        SpanButton.classList.add('badge')
+                        SpanButton.classList.add('bg-success')
+                        SpanButton.classList.add('rounded-pill')
+                        //SpanButton.classList.add('btn')
+                        //SpanButton.classList.add('btn-outline-danger')
+                        //SpanButton.classList.add('btn-sm')
+                        //SpanButton.setAttribute('id',i)
+                        SpanButton.innerHTML = `${InternalLevel[c]}`                 
+                        Li.append(SpanButton)
+
+                        if(InternalFlameLevel[c]>0){
+                            let FlameImg=document.createElement('img')
+                            if(InternalFlameLevel[c]==1){
+                                FlameImg.setAttribute('src','/Images/fire.png')             
+                            }
+                            if(InternalFlameLevel[c]==2){
+                                FlameImg.setAttribute('src','/Images/doublefire.png')
+                            }
+                            FlameImg.setAttribute('width','16rem')
+                            FlameImg.classList.add('mb-1')
+                            FlameImg.classList.add('ms-1')
+                            SpanButton.append(FlameImg)
+                        }
+                    }
+                }    
+            }
+    }
+}
+
+function GetIndexOfBestSkillOfPawns(){
+    let ListOfPawn=[]
+    let OutputArray=[]
+    let OutputObject={}
+    let SkillOfPawn=''
+
+    for(let x=0;x<Object.keys(NameOfPawn).length;x++){
+        for(let a=0;a<NumberOfBestSkillsOfPawns;a++){
+            SkillOfPawn=BestSkillListofPawns[x][a]
+            console.log(SkillOfPawn)
+            console.log("SkillOfPawn")
+            for(let b=0;b<NumberOfSkills;b++){
+                if(SkillOfPawn===SkillList[b]){
+                    console.log(SkillList[b])
+                    console.log("SkillList[b]")
+                    OutputArray[a]=b
+                    console.log(OutputArray[a])
+                    console.log("OutputArray[a]")
+                    console.log(OutputArray)
+                    console.log("OutputArray")
+                }
+            }
+            OutputObject[x]=OutputArray          
+        }
+        OutputArray=[]
+    }
+    return OutputObject
+}
+
