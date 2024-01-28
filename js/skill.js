@@ -73,8 +73,8 @@ SkillLevelList=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOf
 //Finding Skills Names of Best Skills of Pawns
 
 //Event Listeners
-UpdateButtonSkill.addEventListener("click",InnerTextChanger)
-UpdateButtonPawns.addEventListener("click",ElementCreator)
+UpdateButtonSkill.addEventListener("click",SkillCardGenerator)
+UpdateButtonPawns.addEventListener("click",PawnCardGenerator)
 //Event Listeners
 
 //functions
@@ -227,10 +227,10 @@ function BestNameList(ObjectGiven3,ObjectGiven4,Cycle3,Cycle4,Mode){
     }
 }
 
-function InnerTextChanger(){
-    console.log("I am here")
+function SkillCardGenerator(){
+    
 }
 
-function ElementCreator(){
+function PawnCardGenerator(){
     console.log("I am here")
 }
