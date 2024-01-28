@@ -17,13 +17,14 @@ let PawnsSkillGrades={}
 let SkillGradesOrdered={}
 let PawnsSkillGradesOrdered={}
 let BestNameListofSkills={}
-let NumberOfBestPawnOfSkills=2
+let NumberOfBestPawnOfSkills=1
 let BestSkillListofPawns={}
-let NumberOfBestSkillsOfPawns=3
-let SkillLevelList={}
+let NumberOfBestSkillsOfPawns=2
+let SkillLevelList={"0":[0],"1":[0],"2":[0],"3":[0],"4":[0],"5":[0],"6":[0],"7":[0],"8":[0],"9":[0],"10":[0],"11":[0],}
 
 
 //Global Variables
+
 
 //Pawn Info update from main page
 LocalStorageGettingMainPage()
@@ -60,24 +61,25 @@ PawnsSkillGradesOrdered=GradeOrderer(PawnsSkillGrades,Object.keys(NameOfPawn).le
 
 //Finding Name of Best Pawns of Skills
 BestNameListofSkills=BestNameList(SkillGradesOrdered,NameOfPawn,NumberOfSkills,NumberOfBestPawnOfSkills,1)
-//console.log(BestNameListofSkills)
-//console.log("BestNameListofSkills")
+console.log(BestNameListofSkills)
+console.log("BestNameListofSkills")
 //Finding Name of Best Pawns of Skills
 
 //Finding Skills Names of Best Skills of Pawns
 BestSkillListofPawns=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,1)
-//console.log(BestSkillListofPawns)
-//console.log("BestSkillListofPawns")
+console.log(BestSkillListofPawns)
+console.log("BestSkillListofPawns")
 //Finding Skills Names of Best Skills of Pawns
 
 //Finding Skills Names of Best Skills of Pawns
 //SkillLevelList=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOfPawn).length,NumberOfBestSkillsOfPawns,2)
+SkillLevelGetter()
 console.log(SkillLevelList)
 console.log("SkillLevelList")
 //Finding Skills Names of Best Skills of Pawns
 
 //Event Listeners
-UpdateButtonSkill.addEventListener("click",ElementCreator)
+UpdateButtonSkill.addEventListener("click",ElementCreator())
 UpdateButtonPawns.addEventListener("click",ElementCreator)
 //Event Listeners
 
@@ -273,4 +275,17 @@ function ElementCreator(){
             }
 
         }
+}
+
+function SkillLevelGetter(){
+    let MiddleArray=[]
+    for(let a=0;a<NumberOfSkills;a++){
+        //console.log(a)
+        for(let b=0;b<NumberOfBestSkillsOfPawns;b++){
+            MiddleArray[b]=SkillsOfPawns[SkillGradesOrdered[a][b]][a]   
+        }
+        SkillLevelList[a]=MiddleArray
+        //console.log(SkillLevelList)
+        MiddleArray=[]
+    }
 }
