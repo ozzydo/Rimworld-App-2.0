@@ -71,6 +71,8 @@ SkillLevelList=BestNameList(PawnsSkillGradesOrdered,SkillList,Object.keys(NameOf
 //console.log("SkillLevelList")
 //Finding Skills Names of Best Skills of Pawns
 
+
+
 //functions
 function LocalStorageGettingMainPage(){
     let UnstringfiedNameOfPawn=localStorage.getItem("NameOfPawn")
@@ -219,4 +221,8 @@ function BestNameList(ObjectGiven3,ObjectGiven4,Cycle3,Cycle4,Mode){
     if(Mode==2){
         return BestSkillListObject
     }
+}
+
+function ElementCreator(){
+    xxx
 }
