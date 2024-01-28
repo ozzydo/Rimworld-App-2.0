@@ -17,7 +17,7 @@ let PawnsSkillGrades={}
 let SkillGradesOrdered={}
 let PawnsSkillGradesOrdered={}
 let BestNameListofSkills={}
-let NumberOfBestPawnOfSkills=1
+let NumberOfBestPawnOfSkills=2
 let BestSkillListofPawns={}
 let NumberOfBestSkillsOfPawns=2
 let SkillLevelList={"0":[0],"1":[0],"2":[0],"3":[0],"4":[0],"5":[0],"6":[0],"7":[0],"8":[0],"9":[0],"10":[0],"11":[0],}
@@ -234,10 +234,9 @@ function ElementCreator(){
 
             for(let i=0;i<NumberOfSkills;i++){
                 InternalName=BestNameListofSkills[i]
-  
+                    //console.log(InternalName)
+                InternalLevel=SkillLevelList[i]
 
-                //console.log(InternalName)
-  
 
                 for(let a=0;a<NumberOfBestPawnOfSkills;a++){
                     let Li= document.createElement('li')
@@ -270,6 +269,7 @@ function ElementCreator(){
                     //SpanButton.classList.add('btn-outline-danger')
                     //SpanButton.classList.add('btn-sm')
                     //SpanButton.setAttribute('id',i)
+                    SpanButton.innerHTML = `${InternalLevel[a]}`
                     Li.append(SpanButton)
                 }
             }
