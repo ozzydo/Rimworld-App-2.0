@@ -207,15 +207,32 @@ function BestNameList(ObjectGiven3,ObjectGiven4,Cycle3,Cycle4,Mode){
     let BestSkillListObject={}
     let CurrentSkillsArray=[]
     let OutputSkillArray=[]
+    let ModeDependentCycle=0
+
+    if(Mode==1){
+        ModeDependentCycle=Cycle4
+    }
+    else if(Mode==2){
+        ModeDependentCycle=NumberOfSkills
+    }
+
     for(let x=0;x<Cycle3;x++){
+        if(Mode==1 || Mode==2){
         CurrentNamesArray=ObjectGiven3[x]
-        if(Cycle3==Object.keys(NameOfPawn).length){
-            CurrentSkillsArray=SkillsOfPawns[x]
         }
-        for(let a=0;a<Cycle4;a++){
+        if(Mode==2){
+            CurrentSkillsArray=SkillsOfPawns[x]
+            console.log(CurrentSkillsArray)
+            console.log("CurrentSkillsArray")
+        }
+        for(let a=0;a<ModeDependentCycle;a++){
+            if(Mode==1){
             OutputNameArray[a]=ObjectGiven4[CurrentNamesArray[a]]
-            if(Cycle3==Object.keys(NameOfPawn).length){
+            }
+            if(Mode==2){
                 OutputSkillArray[a]=CurrentSkillsArray[CurrentNamesArray[a]]
+                console.log(OutputSkillArray)
+                console.log("OutputSkillArray")
             }
         }
         BestNameListObject[x]=OutputNameArray
@@ -249,7 +266,7 @@ function ElementCreator(Mode){
                 InternalLevel=SkillLevelList[i]
 
                 //console.log(InternalName)
-                console.log(InternalLevel)
+                //console.log(InternalLevel)
 
                 for(let a=0;a<NumberOfBestPawnOfSkills;a++){
                     let Li= document.createElement('li')
@@ -258,7 +275,7 @@ function ElementCreator(Mode){
                     Li.classList.add('justify-content-between')
                     Li.classList.add('align-items-start')
                     Li.classList.add('a')
-                    console.log(ListBody)
+                    //console.log(ListBody)
                     ListBody[i].append(Li)
 
                     let UpperDiv= document.createElement('div')
