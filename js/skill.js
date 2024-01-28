@@ -17,11 +17,11 @@ let PawnsSkillGrades={}
 let SkillGradesOrdered={}
 let PawnsSkillGradesOrdered={}
 let BestNameListofSkills={}
-let NumberOfBestPawnOfSkills=2
+let NumberOfBestPawnOfSkills=4
 let BestSkillListofPawns={}
 let NumberOfBestSkillsOfPawns=2
 let SkillLevelList={"0":[0],"1":[0],"2":[0],"3":[0],"4":[0],"5":[0],"6":[0],"7":[0],"8":[0],"9":[0],"10":[0],"11":[0],}
-
+let FlameLevelList={"0":[0],"1":[0],"2":[0],"3":[0],"4":[0],"5":[0],"6":[0],"7":[0],"8":[0],"9":[0],"10":[0],"11":[0],}
 
 //Global Variables
 
@@ -77,6 +77,12 @@ SkillLevelGetter()
 console.log(SkillLevelList)
 console.log("SkillLevelList")
 //Finding Skills Names of Best Skills of Pawns
+
+//Finding Flame Levels of Best Skills of Pawns
+FlameLevelGetter()
+console.log(FlameLevelList)
+console.log("FlameLevelList")
+//Finding Flame Levels of Best Skills of Pawns
 
 //Event Listeners
 UpdateButtonSkill.addEventListener("click",ElementCreator())
@@ -223,6 +229,7 @@ function ElementCreator(){
   
             let InternalName=""
             let InternalLevel=0
+            let InternalFlameLevel=0
         if(Object.keys(BestNameListofSkills).length>0){
 
             let LiList=document.querySelectorAll('.a')
@@ -236,6 +243,7 @@ function ElementCreator(){
                 InternalName=BestNameListofSkills[i]
                     //console.log(InternalName)
                 InternalLevel=SkillLevelList[i]
+                InternalFlameLevel=FlameLevelList[i]
 
 
                 for(let a=0;a<NumberOfBestPawnOfSkills;a++){
@@ -269,8 +277,22 @@ function ElementCreator(){
                     //SpanButton.classList.add('btn-outline-danger')
                     //SpanButton.classList.add('btn-sm')
                     //SpanButton.setAttribute('id',i)
-                    SpanButton.innerHTML = `${InternalLevel[a]}`
+                    SpanButton.innerHTML = `${InternalLevel[a]}`                 
                     Li.append(SpanButton)
+
+                    if(InternalFlameLevel[a]>0){
+                        let FlameImg=document.createElement('img')
+                        if(InternalFlameLevel[a]==1){
+                            FlameImg.setAttribute('src','/Images/fire.png')             
+                        }
+                        if(InternalFlameLevel[a]==2){
+                            FlameImg.setAttribute('src','/Images/doublefire.png')
+                        }
+                        FlameImg.setAttribute('width','16rem')
+                        FlameImg.classList.add('mb-1')
+                        FlameImg.classList.add('ms-1')
+                        SpanButton.append(FlameImg)
+                    }
                 }
             }
 
@@ -281,10 +303,23 @@ function SkillLevelGetter(){
     let MiddleArray=[]
     for(let a=0;a<NumberOfSkills;a++){
         //console.log(a)
-        for(let b=0;b<NumberOfBestSkillsOfPawns;b++){
+        for(let b=0;b<NumberOfBestPawnOfSkills;b++){
             MiddleArray[b]=SkillsOfPawns[SkillGradesOrdered[a][b]][a]   
         }
         SkillLevelList[a]=MiddleArray
+        //console.log(SkillLevelList)
+        MiddleArray=[]
+    }
+}
+
+function FlameLevelGetter(){
+    let MiddleArray=[]
+    for(let a=0;a<NumberOfSkills;a++){
+        //console.log(a)
+        for(let b=0;b<NumberOfBestSkillsOfPawns;b++){
+            MiddleArray[b]=FlamesOfPawns[SkillGradesOrdered[a][b]][a]   
+        }
+        FlameLevelList[a]=MiddleArray
         //console.log(SkillLevelList)
         MiddleArray=[]
     }
