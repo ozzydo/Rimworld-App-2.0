@@ -232,5 +232,5 @@ function InnerTextChanger(){
 }
 
 function ElementCreator(){
-    xxx
+    console.log("I am here")
 }
