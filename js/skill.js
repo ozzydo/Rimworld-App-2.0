@@ -21,7 +21,7 @@ let NumberOfBestPawnOfSkills=2
 let BestSkillListofPawns={}
 let NumberOfBestSkillsOfPawns=2
 let SkillLevelList={"0":[0],"1":[0],"2":[0],"3":[0],"4":[0],"5":[0],"6":[0],"7":[0],"8":[0],"9":[0],"10":[0],"11":[0],}
-
+let FlameLevelList={"0":[0],"1":[0],"2":[0],"3":[0],"4":[0],"5":[0],"6":[0],"7":[0],"8":[0],"9":[0],"10":[0],"11":[0],}
 
 //Global Variables
 
@@ -77,6 +77,12 @@ SkillLevelGetter()
 console.log(SkillLevelList)
 console.log("SkillLevelList")
 //Finding Skills Names of Best Skills of Pawns
+
+//Finding Flame Levels of Best Skills of Pawns
+FlameLevelGetter()
+console.log(FlameLevelList)
+console.log("FlameLevelList")
+//Finding Flame Levels of Best Skills of Pawns
 
 //Event Listeners
 UpdateButtonSkill.addEventListener("click",ElementCreator())
@@ -285,6 +291,19 @@ function SkillLevelGetter(){
             MiddleArray[b]=SkillsOfPawns[SkillGradesOrdered[a][b]][a]   
         }
         SkillLevelList[a]=MiddleArray
+        //console.log(SkillLevelList)
+        MiddleArray=[]
+    }
+}
+
+function FlameLevelGetter(){
+    let MiddleArray=[]
+    for(let a=0;a<NumberOfSkills;a++){
+        //console.log(a)
+        for(let b=0;b<NumberOfBestSkillsOfPawns;b++){
+            MiddleArray[b]=FlamesOfPawns[SkillGradesOrdered[a][b]][a]   
+        }
+        FlameLevelList[a]=MiddleArray
         //console.log(SkillLevelList)
         MiddleArray=[]
     }
