@@ -67,6 +67,7 @@ console.log("PawnsSkillGradesOrdered")
 BestNameListofSkills=BestNameList(SkillGradesOrdered,NameOfPawn,NumberOfSkills,NumberOfBestPawnOfSkills,1)
 console.log(BestNameListofSkills)
 console.log("BestNameListofSkills")
+LocalStorageSetting()
 //Finding Name of Best Pawns of Skills
 
 //Finding Skills Names of Best Skills of Pawns
@@ -502,4 +503,9 @@ function GetLevelOfFlamesOfPawns(){
         //console.log(SkillLevelList)
         MiddleArray=[]
     }
+}
+
+function LocalStorageSetting(){
+    let BestNameListObjectJson=JSON.stringify(BestNameListofSkills)
+    localStorage.setItem("BestNameListObject", BestNameListObjectJson)
 }
