@@ -19,12 +19,14 @@ let PawnsSkillGrades={}
 let SkillGradesOrdered={}
 let PawnsSkillGradesOrdered={}
 let BestNameListofSkills={}
-let NumberOfBestPawnOfSkills=2
+let NumberOfBestPawnOfSkills=5
 let BestSkillListofPawns={}
-let NumberOfBestSkillsOfPawns=2
+let NumberOfBestSkillsOfPawns=5
 let SkillLevelList={"0":[0],"1":[0],"2":[0],"3":[0],"4":[0],"5":[0],"6":[0],"7":[0],"8":[0],"9":[0],"10":[0],"11":[0],}
 let FlameLevelList={"0":[0],"1":[0],"2":[0],"3":[0],"4":[0],"5":[0],"6":[0],"7":[0],"8":[0],"9":[0],"10":[0],"11":[0],}
 let IndexOfBestSkillOfPawns={}
+let SkillLevelListOfPawns1={}
+let FlameLevelListOfPawns1={}
 //Global Variables
 
 
@@ -92,9 +94,13 @@ console.log(IndexOfBestSkillOfPawns)
 console.log("IndexOfBestSkillOfPawns")
 //Finding Index of Best Skills of Pawns
 
+GetLevelOfSkillsOfPawns()
+
+GetLevelOfFlamesOfPawns()
+
 //Event Listeners
 UpdateButtonSkill.addEventListener("click",ElementCreator())
-UpdateButtonPawns.addEventListener("click",CardCreator)
+UpdateButtonPawns.addEventListener("click",CardCreator())
 //Event Listeners
 
 //functions
@@ -279,7 +285,7 @@ function ElementCreator(){
 
                     let SpanButton= document.createElement('span')
                     SpanButton.classList.add('badge')
-                    SpanButton.classList.add('bg-success')
+                    SpanButton.classList.add('bg-secondary')
                     SpanButton.classList.add('rounded-pill')
                     //SpanButton.classList.add('btn')
                     //SpanButton.classList.add('btn-outline-danger')
@@ -347,14 +353,18 @@ function CardCreator(){
             console.log("I was here")
             }
     
-            for(let i=0;i<Object.keys(NameOfPawn).length;i++){
-                InternalSkill=BestSkillListofPawns[i]
-                InternalLevel=SkillLevelList[i]
-                InternalFlameLevel=FlameLevelList[i]
+ 
+                InternalSkill=BestSkillListofPawns[x]
+                //InternalLevel=SkillLevelListOfPawns1[x]
+                //InternalFlameLevel=FlameLevelList[x]
 
             
     
                 for(let a=0;a<Object.keys(NameOfPawn).length;a++){
+                    
+                    InternalSkill=BestSkillListofPawns[a]
+                    InternalLevel=SkillLevelListOfPawns1[a]
+                    InternalFlameLevel=FlameLevelListOfPawns1[a]
 
                     let UpperDiv1=document.createElement('div')
                     UpperDiv1.classList.add('col-3')
@@ -411,7 +421,7 @@ function CardCreator(){
 
                         let SpanButton= document.createElement('span')
                         SpanButton.classList.add('badge')
-                        SpanButton.classList.add('bg-success')
+                        SpanButton.classList.add('bg-dark')
                         SpanButton.classList.add('rounded-pill')
                         //SpanButton.classList.add('btn')
                         //SpanButton.classList.add('btn-outline-danger')
@@ -435,7 +445,7 @@ function CardCreator(){
                         }
                     }
                 }    
-            }
+            
     }
 }
 
@@ -448,17 +458,17 @@ function GetIndexOfBestSkillOfPawns(){
     for(let x=0;x<Object.keys(NameOfPawn).length;x++){
         for(let a=0;a<NumberOfBestSkillsOfPawns;a++){
             SkillOfPawn=BestSkillListofPawns[x][a]
-            console.log(SkillOfPawn)
-            console.log("SkillOfPawn")
+            //console.log(SkillOfPawn)
+            //console.log("SkillOfPawn")
             for(let b=0;b<NumberOfSkills;b++){
                 if(SkillOfPawn===SkillList[b]){
-                    console.log(SkillList[b])
-                    console.log("SkillList[b]")
+                    //console.log(SkillList[b])
+                    //console.log("SkillList[b]")
                     OutputArray[a]=b
-                    console.log(OutputArray[a])
-                    console.log("OutputArray[a]")
-                    console.log(OutputArray)
-                    console.log("OutputArray")
+                    //console.log(OutputArray[a])
+                    //console.log("OutputArray[a]")
+                    //console.log(OutputArray)
+                    //console.log("OutputArray")
                 }
             }
             OutputObject[x]=OutputArray          
@@ -467,4 +477,29 @@ function GetIndexOfBestSkillOfPawns(){
     }
     return OutputObject
 }
+//Object.keys(NameOfPawn).length
+function GetLevelOfSkillsOfPawns(){
+    let MiddleArray=[]
+    for(let a=0;a<Object.keys(NameOfPawn).length;a++){
+        //console.log(a)
+        for(let b=0;b<NumberOfBestSkillsOfPawns;b++){
+            MiddleArray[b]=SkillsOfPawns[a][IndexOfBestSkillOfPawns[a][b]]   
+        }
+        SkillLevelListOfPawns1[a]=MiddleArray
+        //console.log(SkillLevelList)
+        MiddleArray=[]
+    }
+}
 
+function GetLevelOfFlamesOfPawns(){
+    let MiddleArray=[]
+    for(let a=0;a<Object.keys(NameOfPawn).length;a++){
+        //console.log(a)
+        for(let b=0;b<NumberOfBestSkillsOfPawns;b++){
+            MiddleArray[b]=FlamesOfPawns[a][IndexOfBestSkillOfPawns[a][b]]   
+        }
+        FlameLevelListOfPawns1[a]=MiddleArray
+        //console.log(SkillLevelList)
+        MiddleArray=[]
+    }
+}
