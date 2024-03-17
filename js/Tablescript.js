@@ -15,6 +15,7 @@ let SkillList=["Shooting","Melee","Construction","Mining","Cooking","Plants","An
 let NumberOfSkills=12
 let BestNameListofSkills={}
 let JobofPawn={}
+let JobList=["Warden","Handle","Cook","Hunt","Construct","Grow","Mine","Plant Cut","Smith","Tailor","Art","Craft","Haul","Clean","Research"]
 
 
 
