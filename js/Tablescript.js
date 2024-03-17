@@ -28,8 +28,10 @@ MaintainInputValue()
 
 
 
-UpdateButtonSkill.addEventListener("click", JobList, GenerateAllRows)
-
+UpdateButtonSkill.addEventListener("click", JobListGeneral)
+UpdateButtonSkill.addEventListener("click", GenerateAllRows)
+General.addEventListener("click", JobListGeneral)
+General.addEventListener("click", GenerateAllRows)
 //JobList()
 
 
@@ -41,7 +43,7 @@ function LocalStorageGetting(){
     
 }
 
-function JobList(){
+function JobListGeneral(){
     
     PawnLimitValue=Number(PawnLimit.value)
     JobLimitValue=Number(JobLimit.value)
@@ -122,6 +124,7 @@ function LocalStorageSetting(){
 function GenerateSingleRow(Name,JobArray){
     let Tr=document.createElement('tr')
     Tr.classList.add('text-center')
+    Tr.classList.add('a')
     Tbody.append(Tr)
 
     let Th=document.createElement('th')
@@ -138,7 +141,7 @@ function GenerateSingleRow(Name,JobArray){
             Input.classList.add('form-check-input')
             Input.setAttribute('type','checkbox')
             Input.setAttribute('value','')
-            Input.setAttribute('checked')
+            Input.setAttribute('checked','')
             Td.append(Input)
         }
         else if(JobArray[a]==0){
@@ -152,6 +155,15 @@ function GenerateSingleRow(Name,JobArray){
 }
 
 function GenerateAllRows(){
+    console.log("I was here")
+
+    let Removal=document.querySelectorAll('.a')
+
+    for(var x=0;x<Removal.length;x++){
+        Removal[x].remove(Removal.firstChild)
+        console.log("I was here deleting")
+        }
+
    for(let a=0;a<Object.keys(NameOfPawn).length;a++){
     let CurName=NameOfPawn[a]
     let CurArray=JobofPawn[a]
