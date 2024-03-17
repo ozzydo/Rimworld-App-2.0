@@ -6,6 +6,7 @@ let JobLimit=document.getElementById('JobLimit')
 let JobLimitValue=0
 let General=document.getElementById('btnradio1')
 let Detailed=document.getElementById('btnradio2')
+let Tbody=document.getElementById('tbody')
 //Get Element
 
 //Global Variables
@@ -27,7 +28,7 @@ MaintainInputValue()
 
 
 
-UpdateButtonSkill.addEventListener("click", JobList)
+UpdateButtonSkill.addEventListener("click", JobList, GenerateAllRows)
 
 //JobList()
 
@@ -118,6 +119,42 @@ function LocalStorageSetting(){
 
 }
 
-function GenerateRow(){
-    
+function GenerateSingleRow(Name,JobArray){
+    let Tr=document.createElement('tr')
+    Tr.classList.add('text-center')
+    Tbody.append(Tr)
+
+    let Th=document.createElement('th')
+    Th.setAttribute('scope','row')
+    Th.innerHTML = `${Name}`
+    Tr.append(Th)
+
+    for(let a=0;a<JobArray.length;a++){
+        let Td=document.createElement('td')
+            Tr.append(Td)
+        
+        if(JobArray[a]==1){
+            let Input=document.createElement('input')
+            Input.classList.add('form-check-input')
+            Input.setAttribute('type','checkbox')
+            Input.setAttribute('value','')
+            Input.setAttribute('checked')
+            Td.append(Input)
+        }
+        else if(JobArray[a]==0){
+            let Input=document.createElement('input')
+            Input.classList.add('form-check-input')
+            Input.setAttribute('type','checkbox')
+            Input.setAttribute('value','')
+            Td.append(Input)
+        }
+    }
+}
+
+function GenerateAllRows(){
+   for(let a=0;a<Object.keys(NameOfPawn).length;a++){
+    let CurName=NameOfPawn[a]
+    let CurArray=JobofPawn[a]
+    GenerateSingleRow(CurName,CurArray)
+   } 
 }
