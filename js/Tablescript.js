@@ -44,7 +44,12 @@ General.addEventListener("click", JobListGeneral)
 General.addEventListener("click", GenerateAllRows)
 //JobList()
 
+//RecentStrategy
+
 Job()
+
+//RecentStrategy
+
 
 
 function LocalStorageGetting(){
@@ -185,30 +190,6 @@ function GenerateAllRows(){
     GenerateSingleRow(CurName,CurArray)
    } 
 }
-
-function JobSkillMapping(CurrentValue,index){
-    //console.log("I was here")
-    let CurArray=[]
-    
-    CurArray=JobofPawn[a]
-        console.log("CurArray")
-        console.log(CurArray)
-    NewArray[index]=CurArray[CurrentValue]
-        console.log("NewArray")
-        console.log(NewArray)
-    NewArrayofJob[a]=NewArray
-        console.log("NewArrayofJob")
-        console.log(NewArrayofJob)
-    
-    //NewArrayofJob[a]=NewArray
-}
-
-function x(){
-    for(let a=0;a<a<Object.keys(NameOfPawn).length;a++){
-        JobList_wIndexofSkills.forEach(JobSkillMapping)
-    }
-}
-
 
 //RecentStrategy
 
