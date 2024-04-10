@@ -23,6 +23,9 @@ let NewArray=[]
 //RecentStrategy
 
 let JobsOfPawns={}
+let PawnsSkillGrades={}
+let SkillArray={}
+let BestPawnLimit=8
 
 //RecentStrategy
 
@@ -44,9 +47,26 @@ General.addEventListener("click", JobListGeneral)
 General.addEventListener("click", GenerateAllRows)
 //JobList()
 
+
 //RecentStrategy
 
 Job()
+
+//Import from Skill.js
+
+PawnsSkillGrades=Grader_Skills(JobsOfPawns,Object.keys(NameOfPawn).length)
+
+PawnsSkillGradesOrdered=GradeOrderer(PawnsSkillGrades,Object.keys(NameOfPawn).length)
+
+SkillArrayCreator()
+
+SkillGrades=Grader_Skills(SkillArray,15)
+
+SkillGradesOrdered=GradeOrderer(SkillGrades,15)
+
+BestNameListofSkills=BestNameList(SkillGradesOrdered,NameOfPawn,15,BestPawnLimit,1)
+
+//Import from Skill.js
 
 //RecentStrategy
 
@@ -55,8 +75,8 @@ Job()
 function LocalStorageGetting(){
     let UnstringfiedNameOfPawn=localStorage.getItem("NameOfPawn")
     NameOfPawn=JSON.parse(UnstringfiedNameOfPawn)
-    let UnstringfiedBestNameListObject=localStorage.getItem("BestNameListObject")
-    BestNameListofSkills=JSON.parse(UnstringfiedBestNameListObject)
+    //let UnstringfiedBestNameListObject=localStorage.getItem("BestNameListObject")
+    //BestNameListofSkills=JSON.parse(UnstringfiedBestNameListObject)
     let UnstringfiedSkillsOfPawns=localStorage.getItem("SkillsOfPawns")
     SkillsOfPawns=JSON.parse(UnstringfiedSkillsOfPawns)
     
@@ -186,7 +206,7 @@ function GenerateAllRows(){
 
    for(let a=0;a<Object.keys(NameOfPawn).length;a++){
     let CurName=NameOfPawn[a]
-    let CurArray=NewArrayofJob[a]
+    let CurArray=JobofPawn[a]
     GenerateSingleRow(CurName,CurArray)
    } 
 }
@@ -212,7 +232,12 @@ function JobMapper(PawnArray){
         if(JobList_wIndexofSkills[a]=="Special"){
             let B=PawnArray[0]
             let C=PawnArray[6]
-            JobArray[a]=(B+C)/2
+            if(B=="None"||C=="None"){
+                JobArray[a]="None"
+            }
+            else{
+                JobArray[a]=(B+C)/2
+            }         
         }
         else if(JobList_wIndexofSkills[a]=="Haul" || JobList_wIndexofSkills[a]=="Clean"){
             if(JobList_wIndexofSkills[a]=="Haul"){
@@ -230,5 +255,132 @@ function JobMapper(PawnArray){
     }
     return JobArray
 }
+
+//Import from Skill.js
+
+function Grader_Skills(ObjectGiven,Cycle){
+    let GradeObject={}
+    let SkillDedicatedtoSkill=[]
+    let Grade=0
+    let Sorting_Value=0
+    let Individual_Value=0
+    let GradeArray=[]
+    let NoneFlag=0
+    //console.log("I was here, why")
+    for(let x=0;x<Cycle;x++){
+        SkillDedicatedtoSkill=ObjectGiven[x]
+        //console.log(SkillDedicatedtoSkill)
+        //console.log("SkillDedicatedtoSkill")
+        
+        for(let i=0;i<SkillDedicatedtoSkill.length;i++){
+            //console.log(SkillDedicatedtoSkill)
+            //console.log("SkillDedicatedtoSkill")
+            if(SkillDedicatedtoSkill[i]=="None"||SkillDedicatedtoSkill[i]=="Haul"||SkillDedicatedtoSkill[i]=="Clean"){
+                NoneFlag=NoneFlag+1
+                //console.log("I was here")
+                //console.log(NoneFlag)
+                //console.log("i",i)
+            }
+        }
+
+        for(let a=0;a<SkillDedicatedtoSkill.length;a++){
+            Sorting_Value=SkillDedicatedtoSkill[a]
+            for(let b=0;b<SkillDedicatedtoSkill.length;b++){
+                Individual_Value=SkillDedicatedtoSkill[b]
+                if(Sorting_Value=="None"||Sorting_Value=="Haul"||Sorting_Value=="Clean"){
+                    Grade=SkillDedicatedtoSkill.length-NoneFlag
+                    NoneFlag=NoneFlag-1
+                    //console.log("I was here2")
+                    //console.log(NoneFlag)
+                    break
+                }
+                else if(Sorting_Value<Individual_Value){
+                    Grade=Grade+1
+                }
+                else if(Sorting_Value==Individual_Value){
+                    if(a!=b && a>b){
+                        Grade=Grade+1
+                    }
+                }
+            }
+            GradeArray[a]=Grade
+            Grade=0
+        }
+        GradeObject[x]=GradeArray
+        Individual_Value=0
+        Grade=0
+        GradeArray=[] 
+    }
+    //console.log(GradeObject)
+    //console.log("GradeObject")
+    return GradeObject
+}
+
+function GradeOrderer(ObjectGiven2,Cycle2){
+    let GradeOrderObject={}
+    let GradesOfIndividual=[]
+    let OrderedGradesOfIndividual=[]
+    for(let x=0;x<Cycle2;x++){
+        GradesOfIndividual=ObjectGiven2[x]
+        //console.log(GradesOfIndividual)
+        //console.log("GradesOfIndividual")
+        for(let a=0;a<GradesOfIndividual.length;a++){
+            for(let b=0;b<GradesOfIndividual.length;b++){
+                //console.log(GradesOfIndividual[a])
+                //console.log("GradesOfIndividual[a]")
+                if(GradesOfIndividual[a]==b){
+                    OrderedGradesOfIndividual[b]=a
+                    //console.log(OrderedGradesOfIndividual[b])
+                    //console.log("OrderedGradesOfIndividual[b]")
+                }            
+            }
+        }
+        GradesOfIndividual=[]
+        GradeOrderObject[x]=OrderedGradesOfIndividual
+        OrderedGradesOfIndividual=[]
+    }
+    return GradeOrderObject  
+}
+
+function SkillArrayCreator(){
+    let CurrentSkillArray=[]
+    let CurrentPawn=[]
+    for(let CounterOfSkills=0;CounterOfSkills<15;CounterOfSkills++){
+        for(let CounterOfPawns=0;CounterOfPawns<Object.keys(NameOfPawn).length;CounterOfPawns++){
+            CurrentPawn=Array.from(JobsOfPawns[CounterOfPawns])
+            //console.log(CurrentPawn)
+            //console.log(Array.from(CurrentPawn))
+            //console.log("CurrentPawn")
+            CurrentSkillArray[CounterOfPawns]=CurrentPawn[CounterOfSkills]
+            //console.log(CurrentSkillArray)
+            //console.log("CurrentSkillArray")
+        }
+        
+        SkillArray[CounterOfSkills]=CurrentSkillArray
+        //console.log(SkillArray)
+        //console.log("SkillArray") 
+        CurrentPawn=[] 
+        CurrentSkillArray=[]   
+    }
+}
+
+function BestNameList(ObjectGiven3,ObjectGiven4,Cycle3,Cycle4,Mode){
+    let BestNameListObject={}
+    let CurrentNamesArray=[]
+    let OutputNameArray=[]
+    for(let x=0;x<Cycle3;x++){
+        CurrentNamesArray=ObjectGiven3[x]
+        for(let a=0;a<Cycle4;a++){
+            OutputNameArray[a]=ObjectGiven4[CurrentNamesArray[a]]
+        }
+        BestNameListObject[x]=OutputNameArray
+        OutputNameArray=[]
+    }
+
+        return BestNameListObject
+    
+}
+
+//Import from Skill.js
 
 //RecentStrategy
