@@ -26,6 +26,7 @@ let JobsOfPawns={}
 let PawnsSkillGrades={}
 let SkillArray={}
 let BestPawnLimit=8
+let Summation={}
 
 //RecentStrategy
 
@@ -38,14 +39,13 @@ LocalStorageGetting()
 MaintainInputValue()
 
 
-//JobList_wIndexofSkills.forEach(JobSkillMapping)
-//JobSkillMapping()
+
 
 UpdateButtonSkill.addEventListener("click", JobListGeneral)
-UpdateButtonSkill.addEventListener("click", GenerateAllRows)
+UpdateButtonSkill.addEventListener("click", TripleFunc)
 General.addEventListener("click", JobListGeneral)
-General.addEventListener("click", GenerateAllRows)
-//JobList()
+General.addEventListener("click", TripleFunc)
+
 
 
 //RecentStrategy
@@ -128,6 +128,8 @@ function JobListGeneral(){
         //console.log(JobofPawn)
         //console.log("=================================================")
     }
+
+    GenerateAllRows()
 
     LocalStorageSetting()
     //JobList_wIndexofSkills.forEach(JobSkillMapping)
@@ -378,6 +380,58 @@ function BestNameList(ObjectGiven3,ObjectGiven4,Cycle3,Cycle4,Mode){
 
         return BestNameListObject
     
+}
+
+function TripleFunc(){
+    let LocalSum=0
+    let CurrArr=[]
+    HaulCleanDeleter()
+    for(let a=0;a<Object.keys(NameOfPawn).length;a++){
+        CurrArr=JobofPawn[a]
+        for(let b=0;b<CurrArr.length;b++){
+            if(LocalSum<JobLimitValue){
+                LocalSum=LocalSum+CurrArr[b]
+                console.log("CurrArr")
+                console.log(CurrArr)
+                console.log("LocalSum")
+                console.log(LocalSum)
+            }
+            else if(CurrArr[b]==1){
+                CurrArr[b]=0
+                JobsOfPawns[a][b]="None"
+            }
+        }
+            console.log("LocalSum")
+            console.log(LocalSum)
+        Summation[a]=LocalSum
+        LocalSum=0
+        CurrArr=[]
+    }
+    HaulnClean()
+    GenerateAllRows()
+}
+
+function HaulCleanDeleter(){
+    for(let a=0;a<JobLimitValue;a++){
+        JobofPawn[a][12]=0
+        JobofPawn[a][13]=0
+    }
+}
+
+function HaulnClean(){
+    for(let a=0;a<Object.keys(NameOfPawn).length;a++){
+        if(Summation[a]<JobLimitValue){
+            if(JobLimitValue-Summation[a]==1){
+                JobofPawn[a][12]=1
+                console.log("JobofPawn")
+                console.log(JobofPawn)
+            }
+            else{
+                JobofPawn[a][12]=1
+                JobofPawn[a][13]=1
+            }
+        }
+    }
 }
 
 //Import from Skill.js
