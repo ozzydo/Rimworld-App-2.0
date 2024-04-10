@@ -16,8 +16,15 @@ let NumberOfSkills=12
 let BestNameListofSkills={}
 let JobofPawn={}
 let JobList=["Warden","Handle","Cook","Hunt","Construct","Grow","Mine","Plant Cut","Smith","Tailor","Art","Craft","Haul","Clean","Research"]
+let JobList_wIndexofSkills=[10,6,4,"Special",2,5,3,5,7,7,8,7,"Haul","Clean",11]//Special=(Shooting+Animals)/2
+let NewArrayofJob={}
+let NewArray=[]
 
+//RecentStrategy
 
+let JobsOfPawns={}
+
+//RecentStrategy
 
 
 
@@ -28,6 +35,8 @@ LocalStorageGetting()
 MaintainInputValue()
 
 
+//JobList_wIndexofSkills.forEach(JobSkillMapping)
+//JobSkillMapping()
 
 UpdateButtonSkill.addEventListener("click", JobListGeneral)
 UpdateButtonSkill.addEventListener("click", GenerateAllRows)
@@ -35,12 +44,16 @@ General.addEventListener("click", JobListGeneral)
 General.addEventListener("click", GenerateAllRows)
 //JobList()
 
+Job()
+
 
 function LocalStorageGetting(){
     let UnstringfiedNameOfPawn=localStorage.getItem("NameOfPawn")
     NameOfPawn=JSON.parse(UnstringfiedNameOfPawn)
     let UnstringfiedBestNameListObject=localStorage.getItem("BestNameListObject")
     BestNameListofSkills=JSON.parse(UnstringfiedBestNameListObject)
+    let UnstringfiedSkillsOfPawns=localStorage.getItem("SkillsOfPawns")
+    SkillsOfPawns=JSON.parse(UnstringfiedSkillsOfPawns)
     
 }
 
@@ -48,7 +61,7 @@ function JobListGeneral(){
     
     PawnLimitValue=Number(PawnLimit.value)
     JobLimitValue=Number(JobLimit.value)
-    console.log(JobLimitValue)
+    //console.log(JobLimitValue)
 
     for(let a=0;a<Object.keys(NameOfPawn).length;a++){
         //console.log("I was here")
@@ -93,17 +106,18 @@ function JobListGeneral(){
     }
 
     LocalStorageSetting()
+    //JobList_wIndexofSkills.forEach(JobSkillMapping)
 }
 
 function MaintainInputValue(){
     
     let UnstringfiedPawnLimitValue=localStorage.getItem("PawnLimitValue")
     PawnLimitValue=JSON.parse(UnstringfiedPawnLimitValue)
-    console.log(PawnLimitValue)
+    //console.log(PawnLimitValue)
     let UnstringfiedJobLimitValue=localStorage.getItem("JobLimitValue")
     JobLimitValue=JSON.parse(UnstringfiedJobLimitValue)
-    console.log(JobLimitValue)
-    console.log(typeof(PawnLimitValue))
+    //console.log(JobLimitValue)
+    //console.log(typeof(PawnLimitValue))
 
     if(typeof(PawnLimitValue)!='string'&& typeof(PawnLimitValue)!='number'){
         PawnLimitValue=0
@@ -118,7 +132,7 @@ function LocalStorageSetting(){
     localStorage.setItem("PawnLimitValue", PawnLimitValueJson)
     let JobLimitValueJson=JSON.stringify(JobLimitValue)
     localStorage.setItem("JobLimitValue", JobLimitValueJson)
-    console.log(JobLimitValueJson)
+    //console.log(JobLimitValueJson)
 
 }
 
@@ -156,18 +170,84 @@ function GenerateSingleRow(Name,JobArray){
 }
 
 function GenerateAllRows(){
-    console.log("I was here")
+    //console.log("I was here")
 
     let Removal=document.querySelectorAll('.a')
 
     for(var x=0;x<Removal.length;x++){
         Removal[x].remove(Removal.firstChild)
-        console.log("I was here deleting")
+        //console.log("I was here deleting")
         }
 
    for(let a=0;a<Object.keys(NameOfPawn).length;a++){
     let CurName=NameOfPawn[a]
-    let CurArray=JobofPawn[a]
+    let CurArray=NewArrayofJob[a]
     GenerateSingleRow(CurName,CurArray)
    } 
 }
+
+function JobSkillMapping(CurrentValue,index){
+    //console.log("I was here")
+    let CurArray=[]
+    
+    CurArray=JobofPawn[a]
+        console.log("CurArray")
+        console.log(CurArray)
+    NewArray[index]=CurArray[CurrentValue]
+        console.log("NewArray")
+        console.log(NewArray)
+    NewArrayofJob[a]=NewArray
+        console.log("NewArrayofJob")
+        console.log(NewArrayofJob)
+    
+    //NewArrayofJob[a]=NewArray
+}
+
+function x(){
+    for(let a=0;a<a<Object.keys(NameOfPawn).length;a++){
+        JobList_wIndexofSkills.forEach(JobSkillMapping)
+    }
+}
+
+
+//RecentStrategy
+
+function Job(){
+    let PawnArray=[]
+    let JobArray=[]
+    for(let a=0;a<Object.keys(NameOfPawn).length;a++){
+        PawnArray=SkillsOfPawns[a]
+        JobArray=JobMapper(PawnArray)
+        JobsOfPawns[a]=JobArray
+        PawnArray=[]
+        JobArray=[]
+    }
+}
+
+function JobMapper(PawnArray){
+    let JobArray=[]
+    let CurrVal=0
+    for(let a=0;a<15;a++){
+        if(JobList_wIndexofSkills[a]=="Special"){
+            let B=PawnArray[0]
+            let C=PawnArray[6]
+            JobArray[a]=(B+C)/2
+        }
+        else if(JobList_wIndexofSkills[a]=="Haul" || JobList_wIndexofSkills[a]=="Clean"){
+            if(JobList_wIndexofSkills[a]=="Haul"){
+                JobArray[a]="Haul"
+            }
+            else{
+                JobArray[a]="Clean"
+            }
+        }
+        else{
+            CurrVal=JobList_wIndexofSkills[a]
+            JobArray[a]=PawnArray[CurrVal]
+        }
+        CurrVal=0
+    }
+    return JobArray
+}
+
+//RecentStrategy
