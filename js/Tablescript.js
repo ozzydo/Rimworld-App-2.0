@@ -71,7 +71,6 @@ BestNameListofSkills=BestNameList(SkillGradesOrdered,NameOfPawn,15,BestPawnLimit
 //RecentStrategy
 
 
-
 function LocalStorageGetting(){
     let UnstringfiedNameOfPawn=localStorage.getItem("NameOfPawn")
     NameOfPawn=JSON.parse(UnstringfiedNameOfPawn)
