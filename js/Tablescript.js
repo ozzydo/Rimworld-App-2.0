@@ -45,7 +45,8 @@ UpdateButtonSkill.addEventListener("click", JobListGeneral)
 UpdateButtonSkill.addEventListener("click", TripleFunc)
 General.addEventListener("click", JobListGeneral)
 General.addEventListener("click", TripleFunc)
-
+Detailed.addEventListener("click", JobListGeneral)
+Detailed.addEventListener("click", TripleFunc)
 
 
 //RecentStrategy
