@@ -638,3 +638,6 @@ function DetailedGenerateAllRows(){
     DetailedGenerateSingleRow(CurName,CurArray)
    } 
 }
+
+JobListGeneral()
+TripleFunc()
