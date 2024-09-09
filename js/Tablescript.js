@@ -30,6 +30,12 @@ let Summation={}
 
 //RecentStrategy
 
+//Detailed
+let ObjectofPoints={}
+let ObjectofindexofPoints={}
+let ObjectAverage={}
+let ObjectofGradedPoints={}
+//Detailed
 
 
 //Pawn Info update from main page
@@ -45,8 +51,8 @@ UpdateButtonSkill.addEventListener("click", JobListGeneral)
 UpdateButtonSkill.addEventListener("click", TripleFunc)
 General.addEventListener("click", JobListGeneral)
 General.addEventListener("click", TripleFunc)
-Detailed.addEventListener("click", JobListGeneral)
-Detailed.addEventListener("click", TripleFunc)
+Detailed.addEventListener("click", DetailedTablePointPicker)
+Detailed.addEventListener("click", DetailedGenerateAllRows)
 
 
 //RecentStrategy
@@ -220,7 +226,11 @@ function Job(){
     let JobArray=[]
     for(let a=0;a<Object.keys(NameOfPawn).length;a++){
         PawnArray=SkillsOfPawns[a]
+        //console.log("PawnArray")
+        //console.log(PawnArray)
         JobArray=JobMapper(PawnArray)
+        //console.log("JobArray")
+        //console.log(JobArray)
         JobsOfPawns[a]=JobArray
         PawnArray=[]
         JobArray=[]
@@ -392,18 +402,18 @@ function TripleFunc(){
         for(let b=0;b<CurrArr.length;b++){
             if(LocalSum<JobLimitValue){
                 LocalSum=LocalSum+CurrArr[b]
-                console.log("CurrArr")
-                console.log(CurrArr)
-                console.log("LocalSum")
-                console.log(LocalSum)
+                //console.log("CurrArr")
+                //console.log(CurrArr)
+                //console.log("LocalSum")
+                //console.log(LocalSum)
             }
             else if(CurrArr[b]==1){
                 CurrArr[b]=0
                 JobsOfPawns[a][b]="None"
             }
         }
-            console.log("LocalSum")
-            console.log(LocalSum)
+            //console.log("LocalSum")
+            //console.log(LocalSum)
         Summation[a]=LocalSum
         LocalSum=0
         CurrArr=[]
@@ -424,8 +434,8 @@ function HaulnClean(){
         if(Summation[a]<JobLimitValue){
             if(JobLimitValue-Summation[a]==1){
                 JobofPawn[a][12]=1
-                console.log("JobofPawn")
-                console.log(JobofPawn)
+                //console.log("JobofPawn")
+                //console.log(JobofPawn)
             }
             else{
                 JobofPawn[a][12]=1
@@ -438,3 +448,193 @@ function HaulnClean(){
 //Import from Skill.js
 
 //RecentStrategy
+
+// Detailed
+
+function DetailedTablePointPicker(){
+    let Points=[]
+    let indexofPoints=[]
+    let currarray=[]
+    let pushingValue=0
+    for(var c=0;c<Object.keys(NameOfPawn).length;c++){
+        currarray=JobofPawn[c]
+        //console.log("currarray")
+        //console.log(currarray)
+        for(var d=0;d<currarray.length;d++){
+            if(currarray[d]==1){
+                pushingValue=HaulnCleanDetecter(SkillArray[d][c])
+                Points.push(pushingValue)
+                indexofPoints.push(d)
+            }
+            else{
+                //console.log("I was here")
+            }
+        }
+        ObjectofPoints[c]=Points
+        //console.log("ObjectofPoints")
+        //console.log(ObjectofPoints)
+        Points=[]
+        ObjectofindexofPoints[c]=indexofPoints
+        //console.log("ObjectofindexofPoints")
+        //console.log(ObjectofindexofPoints)
+        indexofPoints=[]
+    }
+    DetailedTableAverage()
+    DetailedTablePointGrader()
+}
+
+//Haul and Clean Detection for Detailed Table
+function HaulnCleanDetecter(PushValue){
+    if(PushValue=="Haul"||PushValue=="Clean"){
+        PushValue=100
+    }
+    else{
+        PushValue=PushValue
+    }
+
+    return PushValue
+}
+//Haul and Clean Detection for Detailed Table
+
+function DetailedTableAverage(){
+    let CurrAverage=0
+    let currSum=0
+    let currarraygrader=[]
+    for(var f=0;f<Object.keys(NameOfPawn).length;f++){
+        currarraygrader=ObjectofPoints[f]
+        for(var g=0;g<currarraygrader.length;g++){
+            currSum=currSum+currarraygrader[g]
+        }
+        CurrAverage=(currSum)/(currarraygrader.length)
+
+        ObjectAverage[f]=CurrAverage
+        //console.log("ObjectAverage")
+        //console.log(ObjectAverage)
+        CurrAverage=0
+        currSum=0
+        currarraygrader=[]
+    }
+}
+
+
+function DetailedTablePointGrader(){
+    let currarraygrader=[]
+    let currgrade=1
+    let currentPoint=0
+    let middlearray=[]
+    for(var h=0;h<Object.keys(NameOfPawn).length;h++){
+        currarraygrader=ObjectofPoints[h]       
+        for(var e=0;e<currarraygrader.length;e++){
+            currentPoint=currarraygrader[e]
+            for(var k=0;k<currarraygrader.length;k++){
+                if(k!=e){
+                    if(currentPoint>currarraygrader[k]){
+                        currgrade=currgrade
+                    }
+                    else if(currentPoint<currarraygrader[k]){
+                        if(currgrade<4){
+                            currgrade=currgrade+1
+                        }
+                        else{
+                            currgrade=currgrade
+                        }
+                    }
+                    else{
+                        if(currentPoint>ObjectAverage[h]){
+                            currgrade=currgrade
+                        }
+                        else if(currentPoint<ObjectAverage[h]){
+                            if(currgrade<4){
+                                currgrade=currgrade+1
+                            }
+                        }
+                    }
+                }
+            }
+            middlearray.push(currgrade)
+            //console.log("middlearray")
+            //console.log(middlearray)
+            currgrade=1
+        }
+        ObjectofGradedPoints[h]=middlearray
+        middlearray=[]
+    }    
+
+    DetailedTableReplacer()
+}
+
+function DetailedTableReplacer(){
+    for(var i=0;i<Object.keys(NameOfPawn).length;i++){
+        for(var j=0;j<ObjectofindexofPoints[i].length;j++){
+            if(ObjectofGradedPoints[i][j]!=1){
+            JobofPawn[i][ObjectofindexofPoints[i][j]]=ObjectofGradedPoints[i][j]
+            //console.log("I am not 1")
+            }
+            else{
+                //console.log("i")
+                //console.log(i)
+                //console.log("j")
+                //console.log(j)
+                //console.log("ObjectofindexofPoints[i][j]")
+                //console.log(ObjectofindexofPoints[i][j])
+                JobofPawn[i][ObjectofindexofPoints[i][j]]=1
+            }
+        }
+    }
+}
+
+function DetailedGenerateSingleRow(Name,JobArray){
+    let Tr=document.createElement('tr')
+    Tr.classList.add('text-center')
+    Tr.classList.add('a')
+    Tbody.append(Tr)
+
+    let Th=document.createElement('th')
+    Th.setAttribute('scope','row')
+    Th.innerHTML = `${Name}`
+    Tr.append(Th)
+
+    for(let a=0;a<JobArray.length;a++){
+        let Td=document.createElement('td')
+            Tr.append(Td)
+        
+        if(JobArray[a]!=0){
+            let Text=document.createElement('span')
+            Text.classList.add('badge')
+            Text.classList.add('text-bg-primary')
+            Text.appendChild( document.createTextNode(JobArray[a].toString()))
+            Td.append(Text)
+
+            //let Input=document.createElement('input')
+            //Input.classList.add('form-check-input')
+            //Input.setAttribute('type','checkbox')
+            //Input.setAttribute('value','')
+            //Input.setAttribute('checked','')
+            //Td.append(Input)
+        }
+        else if(JobArray[a]==0){
+            let Input=document.createElement('input')
+            Input.classList.add('form-check-input')
+            Input.setAttribute('type','checkbox')
+            Input.setAttribute('value','')
+            Td.append(Input)
+        }
+    }
+}
+
+function DetailedGenerateAllRows(){
+    //console.log("I was here")
+
+    let Removal=document.querySelectorAll('.a')
+
+    for(var x=0;x<Removal.length;x++){
+        Removal[x].remove(Removal.firstChild)
+        //console.log("I was here deleting")
+        }
+
+   for(let a=0;a<Object.keys(NameOfPawn).length;a++){
+    let CurName=NameOfPawn[a]
+    let CurArray=JobofPawn[a]
+    DetailedGenerateSingleRow(CurName,CurArray)
+   } 
+}
