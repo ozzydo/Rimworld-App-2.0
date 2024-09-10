@@ -1,1 +1,562 @@
-<meta http-equiv="refresh" content="0; url=https:ozzydo.github.io/Rimworld-App-2.0/html/main.html" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+    <body style="background-color: rgb(119, 154, 185);">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<!--Navbar Start--------------------------------------------------------------------------------------------------->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="/Images/MainLogo.png" alt="" width="40" height="40" class="d-inline-block align-text-middle">
+            Rimworld Work Schedule Application
+          </a>
+        </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="main.html">Add Pawn - List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="skills.html">Skills of Pawns</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Table.html">Table of Job</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="upload.html">Import Pawns</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<!--Navbar End--------------------------------------------------------------------------------------------------->
+
+<!--Container Start------------------------------------------------------------------------------------------------->
+        <div class="container-xxl mt-3">
+            <div class="row align-items-start">               
+    <!--Left Half Start------------------------------------------------------------------------------------------------->
+                <div class="col align-self-start">
+                    <div class="row">
+                        <div class="col">
+                            <!--Empty Col for spaceing-->
+                        </div>
+                        <div class="col">
+                            <!--Card Start--------------------------------------------------------------------------->
+                            <div class="card" style="width: 38rem;">
+                                <div class="card-body">
+                                  <h5 class="card-title badgehover">Adding a pawn</h5>
+                                  <h6 class="card-subtitle mb-2 text-muted">Skills</h6>
+                                  <p class="card-subtitle mb-2 text-muted">Please enter x if there is any incapable skill</p>
+
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+                                        <input type="text" id="Naming" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                    </div>
+                                    
+                                    <!--Skill Shooting Start--------------------------------------------------------------------------->
+                                    <Div class="row">
+                                        <div class="col-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text" style="width: 10rem;">Shooting</span>
+                                                <input type="text" aria-label="Level"  id="Sho" class="form-control" style="width: 3rem;">
+                                                <form class="row">
+                                                    <div class="col-2">
+                                                        <!--Empty Col for spaceing-->
+                                                    </div>   
+                                                    <div class="col-10" style="width: 20rem;"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                                            <label class="form-check-label" for="inlineRadio1">
+                                                                <img src="/Images/NoFLame.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                                            <label class="form-check-label" for="inlineRadio2">
+                                                                <img src="/Images/fire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                                                            <label class="form-check-label" for="inlineRadio3">
+                                                                <img src="/Images/doublefire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                    </div>    
+                                                </form>    
+                                            </div>
+                                        </div>
+                                    </Div>
+                                    <!--Skill End--------------------------------------------------------------------------->
+
+                                    <!--Skill Melee Start--------------------------------------------------------------------------->
+                                    <Div class="row">
+                                        <div class="col-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text" style="width: 10rem;">Melee</span>
+                                                <input type="text" aria-label="Level" id="Mel" class="form-control" style="width: 3rem;">
+                                                <form class="row">
+                                                    <div class="col-2">
+                                                        <!--Empty Col for spaceing-->
+                                                    </div>   
+                                                    <div class="col-10" style="width: 20rem;"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option1">
+                                                            <label class="form-check-label" for="inlineRadio4">
+                                                                <img src="/Images/NoFLame.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option2">
+                                                            <label class="form-check-label" for="inlineRadio5">
+                                                                <img src="/Images/fire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio6" value="option3">
+                                                            <label class="form-check-label" for="inlineRadio6">
+                                                                <img src="/Images/doublefire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                    </div>    
+                                                </form>    
+                                            </div>
+                                        </div>
+                                    </Div>
+                                    <!--Skill End--------------------------------------------------------------------------->
+
+                                    <!--Skill Construction Start--------------------------------------------------------------------------->
+                                    <Div class="row">
+                                        <div class="col-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text" style="width: 10rem;">Construction</span>
+                                                <input type="text" aria-label="Level" id="Con" class="form-control" style="width: 3rem;">
+                                                <form class="row">
+                                                    <div class="col-2">
+                                                        <!--Empty Col for spaceing-->
+                                                    </div>   
+                                                    <div class="col-10" style="width: 20rem;"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio7" value="option1">
+                                                            <label class="form-check-label" for="inlineRadio7">
+                                                                <img src="/Images/NoFLame.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio8" value="option2">
+                                                            <label class="form-check-label" for="inlineRadio8">
+                                                                <img src="/Images/fire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio9" value="option3">
+                                                            <label class="form-check-label" for="inlineRadio9">
+                                                                <img src="/Images/doublefire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                    </div>    
+                                                </form>    
+                                            </div>
+                                        </div>
+                                    </Div>
+                                    <!--Skill End--------------------------------------------------------------------------->
+
+                                    <!--Skill Mining Start--------------------------------------------------------------------------->
+                                    <Div class="row">
+                                        <div class="col-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text" style="width: 10rem;">Mining</span>
+                                                <input type="text" aria-label="Level" id="Min" class="form-control" style="width: 3rem;">
+                                                <form class="row">
+                                                    <div class="col-2">
+                                                        <!--Empty Col for spaceing-->
+                                                    </div>   
+                                                    <div class="col-10" style="width: 20rem;"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio10" value="option1">
+                                                            <label class="form-check-label" for="inlineRadio10">
+                                                                <img src="/Images/NoFLame.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio11" value="option2">
+                                                            <label class="form-check-label" for="inlineRadio11">
+                                                                <img src="/Images/fire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio12" value="option3">
+                                                            <label class="form-check-label" for="inlineRadio12">
+                                                                <img src="/Images/doublefire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                    </div>    
+                                                </form>    
+                                            </div>
+                                        </div>
+                                    </Div>
+                                    <!--Skill End--------------------------------------------------------------------------->
+
+                                    <!--Skill Cooking Start--------------------------------------------------------------------------->
+                                    <Div class="row">
+                                        <div class="col-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text" style="width: 10rem;">Cooking</span>
+                                                <input type="text" aria-label="Level" id="Coo" class="form-control" style="width: 3rem;">
+                                                <form class="row">
+                                                    <div class="col-2">
+                                                        <!--Empty Col for spaceing-->
+                                                    </div>   
+                                                    <div class="col-10" style="width: 20rem;"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio13" value="option1">
+                                                            <label class="form-check-label" for="inlineRadio13">
+                                                                <img src="/Images/NoFLame.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio14" value="option2">
+                                                            <label class="form-check-label" for="inlineRadio14">
+                                                                <img src="/Images/fire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio15" value="option3">
+                                                            <label class="form-check-label" for="inlineRadio15">
+                                                                <img src="/Images/doublefire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                    </div>    
+                                                </form>    
+                                            </div>
+                                        </div>
+                                    </Div>
+                                    <!--Skill End--------------------------------------------------------------------------->
+
+                                    <!--Skill Plants Start--------------------------------------------------------------------------->
+                                    <Div class="row">
+                                        <div class="col-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text" style="width: 10rem;">Plants</span>
+                                                <input type="text" aria-label="Level" id="Pla" class="form-control" style="width: 3rem;">
+                                                <form class="row">
+                                                    <div class="col-2">
+                                                        <!--Empty Col for spaceing-->
+                                                    </div>   
+                                                    <div class="col-10" style="width: 20rem;"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio16" value="option1">
+                                                            <label class="form-check-label" for="inlineRadio16">
+                                                                <img src="/Images/NoFLame.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio17" value="option2">
+                                                            <label class="form-check-label" for="inlineRadio17">
+                                                                <img src="/Images/fire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio18" value="option3">
+                                                            <label class="form-check-label" for="inlineRadio18">
+                                                                <img src="/Images/doublefire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                    </div>    
+                                                </form>    
+                                            </div>
+                                        </div>
+                                    </Div>
+                                    <!--Skill End--------------------------------------------------------------------------->
+
+                                    <!--Skill Animals Start--------------------------------------------------------------------------->
+                                    <Div class="row">
+                                        <div class="col-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text" style="width: 10rem;">Animals</span>
+                                                <input type="text" aria-label="Level" id="Ani" class="form-control" style="width: 3rem;">
+                                                <form class="row">
+                                                    <div class="col-2">
+                                                        <!--Empty Col for spaceing-->
+                                                    </div>   
+                                                    <div class="col-10" style="width: 20rem;"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio19" value="option1">
+                                                            <label class="form-check-label" for="inlineRadio19">
+                                                                <img src="/Images/NoFLame.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio20" value="option2">
+                                                            <label class="form-check-label" for="inlineRadio20">
+                                                                <img src="/Images/fire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio21" value="option3">
+                                                            <label class="form-check-label" for="inlineRadio21">
+                                                                <img src="/Images/doublefire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                    </div>    
+                                                </form>    
+                                            </div>
+                                        </div>
+                                    </Div>
+                                    <!--Skill End--------------------------------------------------------------------------->
+
+                                    <!--Skill Crafting Start--------------------------------------------------------------------------->
+                                    <Div class="row">
+                                        <div class="col-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text" style="width: 10rem;">Crafting</span>
+                                                <input type="text" aria-label="Level" id="Cra" class="form-control" style="width: 3rem;">
+                                                <form class="row">
+                                                    <div class="col-2">
+                                                        <!--Empty Col for spaceing-->
+                                                    </div>   
+                                                    <div class="col-10" style="width: 20rem;"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio22" value="option1">
+                                                            <label class="form-check-label" for="inlineRadio22">
+                                                                <img src="/Images/NoFLame.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio23" value="option2">
+                                                            <label class="form-check-label" for="inlineRadio23">
+                                                                <img src="/Images/fire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio24" value="option3">
+                                                            <label class="form-check-label" for="inlineRadio24">
+                                                                <img src="/Images/doublefire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                    </div>    
+                                                </form>    
+                                            </div>
+                                        </div>
+                                    </Div>
+                                    <!--Skill End--------------------------------------------------------------------------->
+
+                                    <!--Skill Artistic Start--------------------------------------------------------------------------->
+                                    <Div class="row">
+                                        <div class="col-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text" style="width: 10rem;">Artistic</span>
+                                                <input type="text" aria-label="Level" id="Art" class="form-control" style="width: 3rem;">
+                                                <form class="row">
+                                                    <div class="col-2">
+                                                        <!--Empty Col for spaceing-->
+                                                    </div>   
+                                                    <div class="col-10" style="width: 20rem;"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio25" value="option1">
+                                                            <label class="form-check-label" for="inlineRadio25">
+                                                                <img src="/Images/NoFLame.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio26" value="option2">
+                                                            <label class="form-check-label" for="inlineRadio26">
+                                                                <img src="/Images/fire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio27" value="option3">
+                                                            <label class="form-check-label" for="inlineRadio27">
+                                                                <img src="/Images/doublefire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                    </div>    
+                                                </form>    
+                                            </div>
+                                        </div>
+                                    </Div>
+                                    <!--Skill End--------------------------------------------------------------------------->
+
+                                    <!--Skill Medical Start--------------------------------------------------------------------------->
+                                    <Div class="row">
+                                        <div class="col-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text" style="width: 10rem;">Medical</span>
+                                                <input type="text" aria-label="Level" id="Med" class="form-control" style="width: 3rem;">
+                                                <form class="row">
+                                                    <div class="col-2">
+                                                        <!--Empty Col for spaceing-->
+                                                    </div>   
+                                                    <div class="col-10" style="width: 20rem;"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio28" value="option1">
+                                                            <label class="form-check-label" for="inlineRadio28">
+                                                                <img src="/Images/NoFLame.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio29" value="option2">
+                                                            <label class="form-check-label" for="inlineRadio29">
+                                                                <img src="/Images/fire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio30" value="option3">
+                                                            <label class="form-check-label" for="inlineRadio30">
+                                                                <img src="/Images/doublefire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                    </div>    
+                                                </form>    
+                                            </div>
+                                        </div>
+                                    </Div>
+                                    <!--Skill End--------------------------------------------------------------------------->
+
+                                    <!--Skill Social Start--------------------------------------------------------------------------->
+                                    <Div class="row">
+                                        <div class="col-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text" style="width: 10rem;">Social</span>
+                                                <input type="text" aria-label="Level" id="Soc" class="form-control" style="width: 3rem;">
+                                                <form class="row">
+                                                    <div class="col-2">
+                                                        <!--Empty Col for spaceing-->
+                                                    </div>   
+                                                    <div class="col-10" style="width: 20rem;"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio31" value="option1">
+                                                            <label class="form-check-label" for="inlineRadio31">
+                                                                <img src="/Images/NoFLame.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio32" value="option2">
+                                                            <label class="form-check-label" for="inlineRadio32">
+                                                                <img src="/Images/fire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio33" value="option3">
+                                                            <label class="form-check-label" for="inlineRadio33">
+                                                                <img src="/Images/doublefire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                    </div>    
+                                                </form>    
+                                            </div>
+                                        </div>
+                                    </Div>
+                                    <!--Skill End--------------------------------------------------------------------------->
+
+                                    <!--Skill Intellectual Start--------------------------------------------------------------------------->
+                                    <Div class="row">
+                                        <div class="col-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text" style="width: 10rem;">Intellectual</span>
+                                                <input type="text" aria-label="Level" id="Int" class="form-control" style="width: 3rem;">
+                                                <form class="row">
+                                                    <div class="col-2">
+                                                        <!--Empty Col for spaceing-->
+                                                    </div>   
+                                                    <div class="col-10" style="width: 20rem;"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio34" value="option1">
+                                                            <label class="form-check-label" for="inlineRadio34">
+                                                                <img src="/Images/NoFLame.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio35" value="option2">
+                                                            <label class="form-check-label" for="inlineRadio35">
+                                                                <img src="/Images/fire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio36" value="option3">
+                                                            <label class="form-check-label" for="inlineRadio36">
+                                                                <img src="/Images/doublefire.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                                                            </label>
+                                                        </div>
+                                                    </div>    
+                                                </form>    
+                                            </div>
+                                        </div>
+                                    </Div>
+                                    <!--Skill End--------------------------------------------------------------------------->
+                                    <div>
+                                        <hr>
+                                    </div>
+                                    <!--Submit Start--------------------------------------------------------------------------->
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <!--Empty Col for spaceing-->
+                                        </div>
+                                        <div class="col">
+                                            <input class="btn btn-primary" id="Adding" type="submit" value="Add Pawn">
+                                        </div>
+
+                                        <!--
+                                        <div class="col">
+                                            <input class="btn btn-warning" id="Loading" type="submit" value="Load Previous">
+                                        </div>
+                                        -->
+                                    </div>
+                                    <!--Submit End--------------------------------------------------------------------------->
+                                </div>
+                            </div>
+                            <!--Card End--------------------------------------------------------------------------->
+                        </div>
+                        <div class="col">
+                            <!--Empty Col for spaceing-->
+                        </div>                        
+                    </div>       
+                </div>
+    <!--Left Half End------------------------------------------------------------------------------------------------->            
+
+    <!--Right Half Start------------------------------------------------------------------------------------------------->
+                <div class="col align-self-start">
+                    <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">List of Pawns</h5>
+                          <h6 class="card-subtitle mb-2 text-body-secondary">Number of Pawns</h6>
+                          <p class="card-text">xxx</p>
+                          <ol class="list-group list-group-numbered" id="listbody">
+
+                          </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-9">
+                                <!--Empty Col for spaceing-->
+                            </div>
+                            <div class="col">
+                                <!--<input class="btn btn-success" id="Deleting" type="submit" value="Delete Pawn">-->
+                            </div>
+                            <!--
+                            <div class="col">
+                                <input class="btn btn-warning" id="Loading" type="submit" value="Load Previous">
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                    <div class="col bg-danger">
+                        <!--Empty Col for spaceing-->
+                    </div>                  
+                </div>
+                
+    <!--Right Half End------------------------------------------------------------------------------------------------->            
+
+        </div>
+
+        <script src="/js/main.js"></script>
+    </body>
+</html>
