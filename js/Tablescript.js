@@ -587,6 +587,9 @@ function DetailedTableReplacer(){
 }
 
 function DetailedGenerateSingleRow(Name,JobArray){
+
+    let ColorofBadge=""
+
     let Tr=document.createElement('tr')
     Tr.classList.add('text-center')
     Tr.classList.add('a')
@@ -602,9 +605,22 @@ function DetailedGenerateSingleRow(Name,JobArray){
             Tr.append(Td)
         
         if(JobArray[a]!=0){
+            if(JobArray[a]==1){
+                ColorofBadge="primary"
+            }
+            else if(JobArray[a]==2){
+                ColorofBadge="success"
+            }
+            else if(JobArray[a]==3){
+                ColorofBadge="danger"
+            }
+            else if(JobArray[a]==4){
+                ColorofBadge="secondary"
+            }
             let Text=document.createElement('span')
             Text.classList.add('badge')
-            Text.classList.add('text-bg-primary')
+
+            Text.classList.add(`text-bg-${ColorofBadge}`)
             Text.appendChild( document.createTextNode(JobArray[a].toString()))
             Td.append(Text)
 
