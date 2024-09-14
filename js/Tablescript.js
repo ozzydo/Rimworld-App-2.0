@@ -37,6 +37,9 @@ let ObjectAverage={}
 let ObjectofGradedPoints={}
 //Detailed
 
+//Detailed Advanced
+let SwitchAdvance=0
+//Detailed Advanced
 
 //Pawn Info update from main page
 LocalStorageGetting()
