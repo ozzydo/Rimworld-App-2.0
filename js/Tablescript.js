@@ -38,7 +38,15 @@ let ObjectofGradedPoints={}
 //Detailed
 
 //Detailed Advanced
-let SwitchAdvance=0
+let SwitchAdvance=1
+let CoefofJobs=[0.2,0.5,0.6,0.7,0.5,0.9,0.6,0.9,0.7,0.7,0.6,0.9,0.9,0.8,0.9]
+let PawnofJob={"0":[],"1":[],"2":[],"3":[],"4":[],"5":[],"6":[],"7":[],"8":[],"9":[],"10":[],"11":[],"12":[],"13":[],"14":[]}
+let NumberofZeros={}
+let NumberofNonZeros={}
+let NumberofOnes={}
+let NumberofTwos={}
+let NumberofThrees={}
+let NumberofFours={}
 //Detailed Advanced
 
 //Pawn Info update from main page
@@ -54,9 +62,9 @@ UpdateButtonSkill.addEventListener("click", JobListGeneral)
 UpdateButtonSkill.addEventListener("click", TripleFunc)
 General.addEventListener("click", JobListGeneral)
 General.addEventListener("click", TripleFunc)
-Detailed.addEventListener("click", DetailedTablePointPicker)
+//Detailed.addEventListener("click", DetailedTablePointPicker)
+Detailed.addEventListener("click", DetailednAdvanceSelection)
 Detailed.addEventListener("click", DetailedGenerateAllRows)
-
 
 //RecentStrategy
 
@@ -77,6 +85,17 @@ SkillGradesOrdered=GradeOrderer(SkillGrades,15)
 BestNameListofSkills=BestNameList(SkillGradesOrdered,NameOfPawn,15,BestPawnLimit,1)
 
 //Import from Skill.js
+
+function DetailednAdvanceSelection(){
+    if(SwitchAdvance==0){
+        DetailedTablePointPicker()
+    }
+    else{
+        
+        DetailedTablePointPicker()
+    }
+}
+
 
 //RecentStrategy
 
@@ -403,16 +422,26 @@ function TripleFunc(){
     for(let a=0;a<Object.keys(NameOfPawn).length;a++){
         CurrArr=JobofPawn[a]
         for(let b=0;b<CurrArr.length;b++){
-            if(LocalSum<JobLimitValue){
-                LocalSum=LocalSum+CurrArr[b]
-                //console.log("CurrArr")
-                //console.log(CurrArr)
+                //console.log("CurrArr[b]")
+                //console.log(CurrArr[b])     
                 //console.log("LocalSum")
                 //console.log(LocalSum)
+                //console.log("-----------------------------------------------------")
+            if(LocalSum<JobLimitValue){
+                LocalSum=LocalSum+CurrArr[b]
+                
             }
             else if(CurrArr[b]==1){
                 CurrArr[b]=0
+                //console.log("JobsOfPawns[a][b]xxxxxxxxxxxxx")
+                //console.log(JobsOfPawns[a][b])
+                //console.log("a")
+                //console.log(a)
+                //console.log("b")
+                //console.log(b)
                 JobsOfPawns[a][b]="None"
+                //console.log("JobsOfPawns[a][b]xxxxxxxxxxxxx")
+                //console.log(JobsOfPawns[a][b])
             }
         }
             //console.log("LocalSum")
@@ -656,7 +685,82 @@ function DetailedGenerateAllRows(){
     let CurArray=JobofPawn[a]
     DetailedGenerateSingleRow(CurName,CurArray)
    } 
+
+   /*
+   if(SwitchAdvance==1){
+    DetailedAdvancedJobRows()
+    CounterofJobsPriorties()
+   }
+    */
+   
 }
+
+//Advanced
+
+function DetailedAdvancedJobRows(){
+    let CurrArrayJob=[]
+    for(var a=0;a<Object.keys(NameOfPawn).length;a++){
+        CurrArrayJob=JobofPawn[a]
+        for(var b=0;b<15;b++){
+            PawnofJob[b][a]=CurrArrayJob[b]
+            //console.log("PawnofJob")
+            //console.log(PawnofJob)
+        }
+    }
+}
+
+function CounterofJobsPriorties(){
+    let CurrArray=[]
+    let CurrNumofZeros=0
+    let CurrNumofNonZeros=0
+    let CurrNumofOnes=0
+    let CurrNumofTwos=0
+    let CurrNumofThrees=0
+    let CurrNumofFours=0
+    for(var a=0;a<15;a++){
+        CurrArray=PawnofJob[a]
+        for(var b=0;b<Object.keys(NameOfPawn).length;b++){
+            if(CurrArray[b]==0){
+                CurrNumofZeros++
+            }
+            else if(CurrArray[b]!=0){
+                CurrNumofNonZeros++
+                if(CurrArray[b]==1){
+                    CurrNumofOnes++
+                }
+                else if(CurrArray[b]==2){
+                    CurrNumofTwos++
+                }
+                else if(CurrArray[b]==3){
+                    CurrNumofThrees++
+                }
+                else if(CurrArray[b]==4){
+                    CurrNumofFours++
+                }
+            }
+        }
+        NumberofZeros[a]=CurrNumofZeros
+        NumberofNonZeros[a]=CurrNumofNonZeros
+        NumberofOnes[a]=CurrNumofOnes
+        NumberofTwos[a]=CurrNumofTwos
+        NumberofThrees[a]=CurrNumofThrees
+        NumberofFours[a]=CurrNumofFours
+        CurrNumofZeros=0
+        CurrNumofNonZeros=0
+        CurrNumofOnes=0
+        CurrNumofTwos=0
+        CurrNumofThrees=0
+        CurrNumofFours=0
+    }
+}
+/*
+function HaulCleanExcluder(){
+    for(let a=0;a<Object.keys(NameOfPawn).length;a++){
+        JobofPawn[a][12]=0
+        JobofPawn[a][13]=0
+    }
+}
+*/
 
 JobListGeneral()
 TripleFunc()
