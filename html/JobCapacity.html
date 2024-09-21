@@ -46,327 +46,121 @@
 <div class="container-xxl">
     <div class="row align-items-start mt-3">   
 
-      <div class="col-12 mb-2">
-        <a href="" class="btn btn-primary" id="UpdateButtonSkills" type="submit" value="Update Skills">Update</a>
-      </div>
+      
 
 <!--Right Half Start------------------------------------------------------------------------------------------------->
         <div id="top" class="col-12 mb-2 align-self-start">
 
           <div class="row">
-            <div class="col-3 mb-2">
+            <div class="col">
                 <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Shooting</h5>
-                    <p class="card-subtitle mb-2 text-body-secondary">Best Pawns</p>
-                    <ol class="list-group list-group-numbered listbody">
-                    
+                    <div class="card-body">
+                        <h5 class="card-title">Job Setting</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Job Capacity,[Pawn]</h6>
+                        
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <p class="card-text mt-2">Priority 1: Longest Time Consumption</p>
+                                    <div class="col-12 input-group mb-3">
+                                        
+                                            <span class="input-group-text" style="width: 6rem;">Cook</span>
+                                            <input type="text" aria-label="Level"  id="Cook" class="form-control me-3" style="width: 3rem;">
+                                        
+                                            <span class="input-group-text" style="width: 6rem;">Craft</span>
+                                            <input type="text" aria-label="Level"  id="Craft" class="form-control me-3" style="width: 3rem;">
+                                        
+                                            <span class="input-group-text" style="width: 6rem;">Haul</span>
+                                            <input type="text" aria-label="Level"  id="Haul" class="form-control me-3" style="width: 3rem;">
 
-                      <li class="list-group-item d-flex justify-content-between align-items-start a">
-                          <div class="ms-2 me-auto">
-                              <div class="fw-bold">
-                                  <span id="0">Enter a Pawn</span>
-                              </div>
-                          </div>
-                          <span class="badge bg-danger rounded-pill btn btn-outline-danger btn-sm" id="0.1">
-                              X
-                          </span>
-                      </li>
+                                            <span class="input-group-text" style="width: 6rem;">Clean</span>
+                                            <input type="text" aria-label="Level"  id="Clean" class="form-control me-3" style="width: 3rem;">
+                                            
+                                            <span class="input-group-text" style="width: 6rem;">Research</span>
+                                            <input type="text" aria-label="Level"  id="Research" class="form-control" style="width: 3rem;">
+                                        
+                                    </div>
+                                </div>
+                                    <hr>
+                                <div class="row">
+
+                                        <p class="card-text">Priority 2: Long Time Consumption</p>
+                                        <div class="row">
+                                            <div class="col input-group mb-3">
 
 
-                    </ol>
-                  </div>
-                </div>
-            </div>
+                                                        <span class="input-group-text" style="width: 6rem;">Construct</span>
+                                                        <input type="text" aria-label="Level"  id="Construct" class="form-control me-3" style="width: 3rem;">
 
-            <div class="col-3 mb-2">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Melee</h5>
-                    <p class="card-subtitle mb-2 text-body-secondary">Best Pawns</p>
-                    <ol class="list-group list-group-numbered listbody">
-                    
-                      <li class="list-group-item d-flex justify-content-between align-items-start a">
-                          <div class="ms-2 me-auto">
-                              <div class="fw-bold">
-                                  <span id="1">Enter a Pawn</span>
-                              </div>
-                          </div>
-                          <span class="badge bg-danger rounded-pill btn btn-outline-danger btn-sm" id="1.1">
-                              X
-                          </span>
-                      </li>
-                    </ol>
-                  </div>
-                </div>  
-            </div>
-                
-            <div class="col-3 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Construction</h5>
-                  <p class="card-subtitle mb-2 text-body-secondary">Best Pawns</p>
-                  <ol class="list-group list-group-numbered listbody">
-                  
-                    <li class="list-group-item d-flex justify-content-between align-items-start a">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">
-                                <span id="2">Enter a Pawn</span>
+                                                        <span class="input-group-text" style="width: 6rem;">Grow</span>
+                                                        <input type="text" aria-label="Level"  id="Grow" class="form-control me-3" style="width: 3rem;">
+
+                                                        <span class="input-group-text" style="width: 6rem;">Mine</span>
+                                                        <input type="text" aria-label="Level"  id="Mine" class="form-control" style="width: 3rem;">
+
+                                                        
+                                            </div>                                                         
+                                        </div>
+                                        <div class="row">
+                                            <div class="col input-group">
+
+                                                        <span class="input-group-text" style="width: 6rem;">Plant Cut</span>
+                                                        <input type="text" aria-label="Level"  id="Plant" class="form-control me-3" style="width: 3rem;">
+
+                                                        <span class="input-group-text" style="width: 6rem;">Smith</span>
+                                                        <input type="text" aria-label="Level"  id="Smith" class="form-control me-3" style="width: 3rem;">
+
+                                                        <span class="input-group-text" style="width: 6rem;">Tailor</span>
+                                                        <input type="text" aria-label="Level"  id="Tailor" class="form-control" style="width: 3rem;">
+
+                                                        
+                                            </div>                                                                                                    
+                                        </div>
+                                           
+                                </div>
+                                <hr>    
+                                <div class="row">
+
+                                    <p class="card-text">Priority 3: Short Time Consumption</p>
+                                    <div class="row">
+                                        <div class="col input-group mb-3">
+
+
+                                                    <span class="input-group-text" style="width: 6rem;">Warden</span>
+                                                    <input type="text" aria-label="Level"  id="Warden" class="form-control me-3" style="width: 3rem;">
+
+                                                    <span class="input-group-text" style="width: 6rem;">Handle</span>
+                                                    <input type="text" aria-label="Level"  id="Handle" class="form-control me-3" style="width: 3rem;">
+
+                                                    <span class="input-group-text" style="width: 6rem;">Hunt</span>
+                                                    <input type="text" aria-label="Level"  id="Hunt" class="form-control me-3" style="width: 3rem;">
+
+                                                    <span class="input-group-text" style="width: 6rem;">Art</span>
+                                                    <input type="text" aria-label="Level"  id="Art" class="form-control" style="width: 3rem;">
+
+                                                    
+                                        </div>                                                         
+                                    </div>       
+                                </div>
+                                
+                                <div class="row align-items-start mt-3">
+                                    <div class="col-11"></div>   
+                                    <div class="col mb-2">
+                                        <input class="btn btn-primary" id="UpdateButton" type="submit" value="Update">
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                        <span class="badge bg-danger rounded-pill btn btn-outline-danger btn-sm" id="2.1">
-                            X
-                        </span>
-                    </li>
-                  </ol>
-                </div>
-              </div>  
-            </div>
 
-            <div class="col-3 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Mining</h5>
-                  <p class="card-subtitle mb-2 text-body-secondary">Best Pawns</p>
-                  <ol class="list-group list-group-numbered listbody">
-                  
-                    <li class="list-group-item d-flex justify-content-between align-items-start a">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">
-                                <span id="3">Enter a Pawn</span>
-                            </div>
-                        </div>
-                        <span class="badge bg-danger rounded-pill btn btn-outline-danger btn-sm" id="3.1">
-                            X
-                        </span>
-                    </li>
-                  </ol>
+                    </div>
                 </div>
-              </div>
             </div>
-
-            <div class="col-3 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Cooking</h5>
-                  <p class="card-subtitle mb-2 text-body-secondary">Best Pawns</p>
-                  <ol class="list-group list-group-numbered listbody">
-                  
-                    <li class="list-group-item d-flex justify-content-between align-items-start a">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">
-                                <span id="4">Enter a Pawn</span>
-                            </div>
-                        </div>
-                        <span class="badge bg-danger rounded-pill btn btn-outline-danger btn-sm" id="4.1">
-                            X
-                        </span>
-                    </li>
-                  </ol>
-                </div>
-              </div>  
-            </div>
-            
-            <div class="col-3 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Plants</h5>
-                  <p class="card-subtitle mb-2 text-body-secondary">Best Pawns</p>
-                  <ol class="list-group list-group-numbered listbody">
-                  
-                    <li class="list-group-item d-flex justify-content-between align-items-start a">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">
-                                <span id="5">Enter a Pawn</span>
-                            </div>
-                        </div>
-                        <span class="badge bg-danger rounded-pill btn btn-outline-danger btn-sm" id="5.1">
-                            X
-                        </span>
-                    </li>
-                  </ol>
-                </div>
-              </div>  
-            </div>
-
-            <div class="col-3 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Animals</h5>
-                  <p class="card-subtitle mb-2 text-body-secondary">Best Pawns</p>
-                  <ol class="list-group list-group-numbered listbody">
-                  
-                    <li class="list-group-item d-flex justify-content-between align-items-start a">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold" id="6">
-                                <span id="6">Enter a Pawn</span>
-                            </div>
-                        </div>
-                        <span class="badge bg-danger rounded-pill btn btn-outline-danger btn-sm" id="6.1">
-                            X
-                        </span>
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-3 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Crafting</h5>
-                  <p class="card-subtitle mb-2 text-body-secondary">Best Pawns</p>
-                  <ol class="list-group list-group-numbered listbody">
-                  
-                    <li class="list-group-item d-flex justify-content-between align-items-start a">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">
-                                <span id="7">Enter a Pawn</span>
-                            </div>
-                        </div>
-                        <span class="badge bg-danger rounded-pill btn btn-outline-danger btn-sm" id="7.1">
-                            X
-                        </span>
-                    </li>
-                  </ol>
-                </div>
-              </div>  
-            </div>
-            
-            <div class="col-3 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Artistic</h5>
-                  <p class="card-subtitle mb-2 text-body-secondary">Best Pawns</p>
-                  <ol class="list-group list-group-numbered listbody">
-                  
-                    <li class="list-group-item d-flex justify-content-between align-items-start a">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">
-                                <span id="8">Enter a Pawn</span>
-                            </div>
-                        </div>
-                        <span class="badge bg-danger rounded-pill btn btn-outline-danger btn-sm" id="8.1">
-                            X
-                        </span>
-                    </li>
-                  </ol>
-                </div>
-              </div>  
-            </div>
-
-            <div class="col-3 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Medical</h5>
-                  <p class="card-subtitle mb-2 text-body-secondary">Best Pawns</p>
-                  <ol class="list-group list-group-numbered listbody">
-                  
-                    <li class="list-group-item d-flex justify-content-between align-items-start a">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">
-                                <span id="9">Enter a Pawn</span>
-                            </div>
-                        </div>
-                        <span class="badge bg-danger rounded-pill btn btn-outline-danger btn-sm" id="9.1">
-                            X
-                        </span>
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-3 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Social</h5>
-                  <p class="card-subtitle mb-2 text-body-secondary">Best Pawns</p>
-                  <ol class="list-group list-group-numbered listbody">
-                  
-                    <li class="list-group-item d-flex justify-content-between align-items-start a">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">
-                                <span id="10">Enter a Pawn</span>
-                            </div>
-                        </div>
-                        <span class="badge bg-danger rounded-pill btn btn-outline-danger btn-sm" id="10.1">
-                            X
-                        </span>
-                    </li>
-                  </ol>
-                </div>
-              </div>  
-            </div>
-            
-            <div class="col-3 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Intellectual</h5>
-                  <p class="card-subtitle mb-2 text-body-secondary">Best Pawns</p>
-                  <ol class="list-group list-group-numbered listbody">
-                  
-                    <li class="list-group-item d-flex justify-content-between align-items-start a">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">
-                                <span id="11">Enter a Pawn</span>
-                            </div>
-                        </div>
-                        <span class="badge bg-danger rounded-pill btn btn-outline-danger btn-sm" id="11.1">
-                            X
-                        </span>
-                    </li>
-                  </ol>
-                </div>
-              </div>  
-            </div>
-
           </div>
         </div>
 
         <hr>
       
-        <div class="col-12 mb-2">
-          <a href="" class="btn btn-primary" id="UpdateButtonPawns" type="submit" value="Update Pawns">Update</a>
-        </div>
-
-        <div class="row" id="toprow">
-          <!--
-          <div class="col-3 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Pawn Name</h5>
-                  <p class="card-subtitle mb-2 text-body-secondary">Best Skills</p>
-                  <ol class="list-group list-group-numbered">
-                  
-                    <li class="list-group-item d-flex justify-content-between align-items-start a-1">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">
-                                <span>Skill</span>
-                            </div>
-                        </div>
-                        <span class="badge bg-danger rounded-pill btn btn-outline-danger btn-sm" id="0">
-                            X
-                        </span>
-                    </li>
-                  </ol>
-                </div>
-              </div>
-          </div>
-          -->
-        
-
-
-        </div>
-
-
-
-
-
-            
-            
-            
-        </div>
 <!--Right Half End------------------------------------------------------------------------------------------------->            
 
         
