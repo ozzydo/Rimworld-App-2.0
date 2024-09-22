@@ -13,6 +13,7 @@ let Tbody=document.getElementById('tbody')
 let NameOfPawn={"0": "Enter a Pawn"}
 let SkillsOfPawns={"0": ["1","1","1","1","1","1","1","1","1","1","1","1"]}
 let FlamesOfPawns={"0": [0,0,0,0,0,0,0,0,0,0,0,0]}
+let CapacityArray=[]
 //Global Variable Initilization from Local Storage
 
 //Variables used in this script
@@ -39,11 +40,22 @@ let TitleofPawns={}
 let TitleNumbersofPawn={}
 let TitleofJobs={}
 let TitleNumbersofJobs={}
+
+let ComparisionArray=[]
+
+let AssignedJobsofPawns={}
+
+let CookCounted=[]
+let CraftCounted=[]
+let ResearchCounted=[]
+
+let Priorty1Occupation=[]
 //Variables used in this script
 
 //Getting data from Local Storage
 LocalStorageGetting()
-
+//AssignerInitializer()
+Priorty1Creator()
 Job()
 SkillArray=SkillArrayCreator(JobsOfPawns,NumberOfPawn,NumberofJobs)
 AverageofJobs()
@@ -54,6 +66,12 @@ TitleofPawnDecision()
 TitleNumbersofPawn=TitleCounter(TitleofPawns,NumberOfPawn,NumberofJobs)
 TitleofJobs=SkillArrayCreator(TitleofPawns,NumberOfPawn,NumberofJobs)
 TitleNumbersofJobs=TitleCounter(TitleofJobs,NumberofJobs,NumberOfPawn)
+
+AssignedJobsofPawns=JSON.parse(JSON.stringify(TitleofPawns))
+
+TitleCapacityComparator()
+AssignIndex()
+JobRunOrdered()
 
 function LocalStorageGetting(){
     let UnstringfiedNameOfPawn=localStorage.getItem("NameOfPawn")
@@ -66,10 +84,20 @@ function LocalStorageGetting(){
     PawnLimitValue=JSON.parse(UnstringfiedPawnLimitValue)
     let UnstringfiedJobLimitValue=localStorage.getItem("JobLimitValue")
     JobLimitValue=JSON.parse(UnstringfiedJobLimitValue)
+    let UnstringfiedCapacityArray=localStorage.getItem("CapacityArray")
+    CapacityArray=JSON.parse(UnstringfiedCapacityArray)
     
     NumberOfPawn=Object.keys(NameOfPawn).length
 }
 //Getting data from Local Storage
+
+function Priorty1Creator(){
+    let currarray=[]
+    for(var i=0;i<NumberOfPawn;i++){
+        currarray[i]=NameOfPawn[i]
+    }
+    Priorty1Occupation=JSON.parse(JSON.stringify(currarray))
+}
 
 function Job(){
     let FlameArray=[]
@@ -283,4 +311,232 @@ function TitleCounter(TargetInput,NumberOfPawn,NumberofJobs){
     return TargetOutput
 }
 //Maybe I will not use this one
+
+function TitleCapacityComparator(){
+    let Comparision=0
+    for(var i=0;i<NumberofJobs;i++){
+        Comparision=(TitleNumbersofJobs[i][0]/CapacityArray[i])*1
+        ComparisionArray[i]=Comparision
+    }
+}
+
+function AssignIndex(){
+    //JobList=["Warden","Handle","Cook","Hunt","Construct","Grow","Mine","Plant Cut","Smith","Tailor","Art","Craft","Haul","Clean","Research"]
+    for(var i=0;i<JobList.length;i++){
+        AssigningMaster(JobList[i],"Master",1)
+    }
+}
+
+function AssigningMaster(Job,Check,value){
+    index=GetIndex(Job)
+    let a
+    for(var i=0;i<NumberOfPawn;i++){
+        a=TitleofPawns[i][index]
+        if(a==Check){
+            AssignedJobsofPawns[i][index]=value
+        }
+    }
+}
+
+function GetIndex(Job){
+    for(var i=0;i<JobList.length;i++){
+        if(JobList[i]==Job){
+            return i
+        }
+    }
+}
+
+function AssignedCounter(Job,value,prohibit){
+    index=GetIndex(Job)
+    let sum=0
+    let a
+    for(var i=0;i<NumberOfPawn;i++){
+        a=AssignedJobsofPawns[i][index]
+        if(a==value){
+            sum++
+            if(prohibit==1){
+                Priorty1Occupation[i]=1
+            }
+        }
+    }
+    return sum
+    sum=0
+}
+
+function AssignLeftCapacity(Job,Slot,Title,Value){
+    let a=0
+    index=GetIndex(Job)
+    let currarray=[]
+    let currarrayValues=[]
+    let currarrayValuesGraded=[]
+    currarray=GetIndexofAsked(Job,Title)
+    console.log("currarray")
+    console.log(currarray)
+    console.log("Slot")
+    console.log(Slot)
+    if(currarray.length==0){
+        //console.log("Here")
+        return 0
+    }
+    else if(Slot<=currarray.length&&currarray.length!=0){
+        //console.log("Here3")
+        currarrayValues=GetValueofAsked(currarray,index)
+        console.log("currarrayValues")
+        console.log(currarrayValues)
+        currarrayValuesGraded=Grader(currarrayValues)
+        console.log("currarrayValuesGraded")
+        console.log(currarrayValuesGraded)
+        for(var i=0;i<Slot;i++){
+            for(var j=0;j<currarray.length;j++){
+                if(Priorty1Occupation[currarray[j]]!=1){
+                    if(currarrayValuesGraded[j]==i){
+                        AssignedJobsofPawns[currarray[j]][index]=Value
+                    }                    
+                }
+            }
+        }
+        return 1
+    }
+    else if(Slot>currarray.length&&currarray.length!=0){
+        AssigningMaster(Job,Title,Value)
+        //console.log("Here4")
+        return 0
+    }
+}
+
+function GetIndexofAsked(Job,Title){
+    index=GetIndex(Job)
+    let currarray=[]
+    for(var i=0;i<NumberOfPawn;i++){
+        if(TitleofPawns[i][index]==Title&&Priorty1Occupation[i]!=1){//&&Priorty1Occupation[i]!=1
+            currarray.push(i)
+        }
+    }
+    return currarray
+}
+
+function GetValueofAsked(Array,index){
+    let currarray=[]
+    for(var i=0;i<Array.length;i++){
+        currarray[i]=JobsOfPawns[Array[i]][index]
+    }
+    return currarray
+}
+
+//import from tablescript.js
+function Grader(Array){
+    let Grade=0
+    let Sorting_Value=0
+    let Individual_Value=0
+    let GradeArray=[]
+    let NoneFlag=0
+    for(let a=0;a<Array.length;a++){
+        Sorting_Value=Array[a]
+        for(let b=0;b<Array.length;b++){
+            Individual_Value=Array[b]
+            if(Sorting_Value=="None"||Sorting_Value=="Haul"||Sorting_Value=="Clean"){
+                Grade=Array.length-NoneFlag
+                NoneFlag=NoneFlag-1
+                //console.log("I was here2")
+                //console.log(NoneFlag)
+                break
+            }
+            else if(Sorting_Value<Individual_Value){
+                Grade=Grade+1
+            }
+            else if(Sorting_Value==Individual_Value){
+                if(a!=b && a>b){
+                    Grade=Grade+1
+                }
+            }
+        }
+        GradeArray[a]=Grade
+        Grade=0
+    }
+    return GradeArray
+    Individual_Value=0
+    Grade=0
+    GradeArray=[] 
+}
+//import from tablescript.js
+
+
+
+function JobRunOrdered(){
+    Cook()
+    Crafting()
+    Researching()
+}
+
+function Cook(){
+    let JobNow="Cook"
+    AssigningMaster(JobNow,"Upper-Intermediate_Flame",1)
+    CookCounted[0]=AssignedCounter(JobNow,1,1)
+
+    if(CookCounted[0]<CapacityArray[GetIndex(JobNow)]){
+        Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-CookCounted[0],"Upper-Intermediate",1)
+        //console.log("Result")
+        //console.log(Result)
+        if(Result==0){
+            CookCounted[0]=AssignedCounter(JobNow,1,1)
+            //console.log("Here2")
+            Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-CookCounted[0],"Intermediate",1)
+            ResearchCounted[0]=AssignedCounter(JobNow,1,1)
+            if(Result==0){
+                CookCounted[0]=AssignedCounter(JobNow,1,1)
+                //console.log("Here5")
+                Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-CookCounted[0],"Beginner",1)
+                ResearchCounted[0]=AssignedCounter(JobNow,1,1)
+            }
+        }
+    }
+}
+
+function Crafting(){
+    let JobNow="Craft"
+    AssigningMaster(JobNow,"Upper-Intermediate_Flame",1)
+    CraftCounted[0]=AssignedCounter(JobNow,1,1)
+
+    if(CookCounted[0]<CapacityArray[GetIndex(JobNow)]){
+        Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-CraftCounted[0],"Upper-Intermediate",1)
+        //console.log("Result")
+        //console.log(Result)
+        if(Result==0){
+            CraftCounted[0]=AssignedCounter(JobNow,1,1)
+            //console.log("Here2")
+            Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-CraftCounted[0],"Intermediate",1)
+            ResearchCounted[0]=AssignedCounter(JobNow,1,1)
+            if(Result==0){
+                CraftCounted[0]=AssignedCounter(JobNow,1,1)
+                //console.log("Here5")
+                Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-CraftCounted[0],"Beginner",1)
+                ResearchCounted[0]=AssignedCounter(JobNow,1,1)
+            }
+        }
+    }
+}
+
+function Researching(){
+    let JobNow="Research"
+    AssigningMaster(JobNow,"Upper-Intermediate_Flame",1)
+    ResearchCounted[0]=AssignedCounter(JobNow,1,1)
+
+    if(CookCounted[0]<CapacityArray[GetIndex(JobNow)]){
+        Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ResearchCounted[0],"Upper-Intermediate",1)
+        //console.log("Result")
+        //console.log(Result)
+        if(Result==0){
+            ResearchCounted[0]=AssignedCounter(JobNow,1,1)
+            //console.log("Here2")
+            Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ResearchCounted[0],"Intermediate",1)
+            ResearchCounted[0]=AssignedCounter(JobNow,1,1)
+            if(Result==0){
+                ResearchCounted[0]=AssignedCounter(JobNow,1,1)
+                //console.log("Here5")
+                Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ResearchCounted[0],"Beginner",1)
+                ResearchCounted[0]=AssignedCounter(JobNow,1,1)
+            }
+        }
+    }
+}
 
