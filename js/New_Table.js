@@ -9,18 +9,30 @@ let Detailed=document.getElementById('btnradio2')
 let Tbody=document.getElementById('tbody')
 //Get Element
 
+General.addEventListener("click", GenerateAllRows)
+General.addEventListener("click", ButtonStatusGeneral)
+Detailed.addEventListener("click", DetailedGenerateAllRows)
+Detailed.addEventListener("click", ButtonStatusDetailed)
+
+UpdateButtonSkill.addEventListener("click", LocalStorageSetting)
+UpdateButtonSkill.addEventListener("click", All)
+
+
 //Global Variable Initilization from Local Storage
 let NameOfPawn={"0": "Enter a Pawn"}
 let SkillsOfPawns={"0": ["1","1","1","1","1","1","1","1","1","1","1","1"]}
 let FlamesOfPawns={"0": [0,0,0,0,0,0,0,0,0,0,0,0]}
 let CapacityArray=[]
+let ButtonStatus=0
 //Global Variable Initilization from Local Storage
 
 //Variables used in this script
 
 let NumberOfPawn=0
 let SkillList=["Shooting","Melee","Construction","Mining","Cooking","Plants","Animals","Crafting","Artistic","Medical","Social","Intellectual"]
-let JobList=["Warden","Handle","Cook","Hunt","Construct","Grow","Mine","Plant Cut","Smith","Tailor","Art","Craft","Haul","Clean","Research"]
+let JobList=["Warden","Handle","Cook","Hunt","Construct","Grow","Mine","Plant","Smith","Tailor","Art","Craft","Haul","Clean","Research"]
+let Priorty2_JobList=["Construct","Grow","Mine","Plant","Smith","Tailor"]
+let Priorty3_JobList=["Warden","Handle","Hunt","Art"]
 let JobList_wIndexofSkills=[10,6,4,"Special",2,5,3,5,7,7,8,7,"Haul","Clean",11]//Special=(Shooting+Animals)/2
 
 let NumberofJobs=15
@@ -48,30 +60,62 @@ let AssignedJobsofPawns={}
 let CookCounted=[]
 let CraftCounted=[]
 let ResearchCounted=[]
+let ConstructCounted=[]
+let GrowCounted=[]
+let MineCounted=[]
+let PlantCounted=[]
+let SmithCounted=[]
+let TailorCounted=[]
+let WardenCounted=[]
+let HandleCounted=[]
+let HuntCounted=[]
+let ArtCounted=[]
 
 let Priorty1Occupation=[]
+
+let Priorty1CountedperPawn={}
+let Priorty2CountedperPawn={}
+let Priorty3CountedperPawn={}
+let Priorty4CountedperPawn={}
+
+let Priorty2Limit=2
 //Variables used in this script
 
-//Getting data from Local Storage
 LocalStorageGetting()
-//AssignerInitializer()
-Priorty1Creator()
-Job()
-SkillArray=SkillArrayCreator(JobsOfPawns,NumberOfPawn,NumberofJobs)
-AverageofJobs()
-BeginnerPointJobs()
-IntermediatePointJobs()
-TitleofPawnDecision()
-//IntermediatePawnDecision()
-TitleNumbersofPawn=TitleCounter(TitleofPawns,NumberOfPawn,NumberofJobs)
-TitleofJobs=SkillArrayCreator(TitleofPawns,NumberOfPawn,NumberofJobs)
-TitleNumbersofJobs=TitleCounter(TitleofJobs,NumberofJobs,NumberOfPawn)
+All()
 
-AssignedJobsofPawns=JSON.parse(JSON.stringify(TitleofPawns))
 
-TitleCapacityComparator()
-AssignIndex()
-JobRunOrdered()
+function All(){
+    console.log("Here")
+    
+    //AssignerInitializer()
+    Priorty1Creator()
+    Job()
+    SkillArray=SkillArrayCreator(JobsOfPawns,NumberOfPawn,NumberofJobs)
+    AverageofJobs()
+    BeginnerPointJobs()
+    IntermediatePointJobs()
+    TitleofPawnDecision()
+    //IntermediatePawnDecision()
+    TitleNumbersofPawn=TitleCounter(TitleofPawns,NumberOfPawn,NumberofJobs)
+    TitleofJobs=SkillArrayCreator(TitleofPawns,NumberOfPawn,NumberofJobs)
+    TitleNumbersofJobs=TitleCounter(TitleofJobs,NumberofJobs,NumberOfPawn)
+
+    AssignedJobsofPawns=JSON.parse(JSON.stringify(TitleofPawns))
+
+    TitleCapacityComparator()
+    AssignIndex()
+    JobRunOrdered()
+    if(ButtonStatus==0){
+        GenerateAllRows()
+    }
+    else{
+        DetailedGenerateAllRows()
+    }
+    MaintainInputValue()
+    LocalStorageSetting()   
+}
+
 
 function LocalStorageGetting(){
     let UnstringfiedNameOfPawn=localStorage.getItem("NameOfPawn")
@@ -90,6 +134,45 @@ function LocalStorageGetting(){
     NumberOfPawn=Object.keys(NameOfPawn).length
 }
 //Getting data from Local Storage
+
+function LocalStorageSetting(){
+
+    PawnLimitValue=PawnLimit.value
+    JobLimitValue=JobLimit.value
+
+    let PawnLimitValueJson=JSON.stringify(PawnLimitValue)
+    localStorage.setItem("PawnLimitValue", PawnLimitValueJson)
+    let JobLimitValueJson=JSON.stringify(JobLimitValue)
+    localStorage.setItem("JobLimitValue", JobLimitValueJson)
+    //console.log(JobLimitValueJson)
+
+}
+
+function MaintainInputValue(){
+    
+    let UnstringfiedPawnLimitValue=localStorage.getItem("PawnLimitValue")
+    PawnLimitValue=JSON.parse(UnstringfiedPawnLimitValue)
+    //console.log(PawnLimitValue)
+    let UnstringfiedJobLimitValue=localStorage.getItem("JobLimitValue")
+    JobLimitValue=JSON.parse(UnstringfiedJobLimitValue)
+    //console.log(JobLimitValue)
+    //console.log(typeof(PawnLimitValue))
+
+    if(typeof(PawnLimitValue)!='string'&& typeof(PawnLimitValue)!='number'){
+        PawnLimitValue=0
+        JobLimitValue=0
+    }
+    PawnLimit.value=PawnLimitValue.toString()
+    JobLimit.value=JobLimitValue.toString()
+}
+
+function ButtonStatusGeneral(){
+    ButtonStatus=0
+}
+
+function ButtonStatusDetailed(){
+    ButtonStatus=1
+}
 
 function Priorty1Creator(){
     let currarray=[]
@@ -330,11 +413,17 @@ function AssignIndex(){
 function AssigningMaster(Job,Check,value){
     index=GetIndex(Job)
     let a
+    let b=Counted_Sum()
     for(var i=0;i<NumberOfPawn;i++){
-        a=TitleofPawns[i][index]
-        if(a==Check){
+        a=AssignedJobsofPawns[i][index]
+        if(a==Check&&b[i]<PawnLimitValue){
             AssignedJobsofPawns[i][index]=value
         }
+        else{
+            if(a==Check){
+                AssignedJobsofPawns[i][index]=value
+            }
+        }      
     }
 }
 
@@ -370,10 +459,27 @@ function AssignLeftCapacity(Job,Slot,Title,Value){
     let currarrayValues=[]
     let currarrayValuesGraded=[]
     currarray=GetIndexofAsked(Job,Title)
+    /*
+    if(Job=="Construct"){
+        console.log("-----------------------------------------------------------------------------------")
+        console.log("Job")
+        console.log(Job)
+        console.log("Title")
+        console.log(Title)
+        console.log("currarray")
+        console.log(currarray)
+        console.log("Slot")
+        console.log(Slot)
+    }
+    /*
+    console.log("-----------------------------------------------------------------------------------")
+    console.log("Job")
+    console.log(Job)
     console.log("currarray")
     console.log(currarray)
     console.log("Slot")
     console.log(Slot)
+    */
     if(currarray.length==0){
         //console.log("Here")
         return 0
@@ -381,14 +487,14 @@ function AssignLeftCapacity(Job,Slot,Title,Value){
     else if(Slot<=currarray.length&&currarray.length!=0){
         //console.log("Here3")
         currarrayValues=GetValueofAsked(currarray,index)
-        console.log("currarrayValues")
-        console.log(currarrayValues)
+        //console.log("currarrayValues")
+        //console.log(currarrayValues)
         currarrayValuesGraded=Grader(currarrayValues)
-        console.log("currarrayValuesGraded")
-        console.log(currarrayValuesGraded)
+        //console.log("currarrayValuesGraded")
+        //console.log(currarrayValuesGraded)
         for(var i=0;i<Slot;i++){
             for(var j=0;j<currarray.length;j++){
-                if(Priorty1Occupation[currarray[j]]!=1){
+                if(Priorty1Occupation[currarray[j]]!=1||(Value==2&&Priorty2CountedperPawn[currarray[j]]<Priorty2Limit)||(Value==3&&Priorty1Occupation[currarray[j]]==1)){
                     if(currarrayValuesGraded[j]==i){
                         AssignedJobsofPawns[currarray[j]][index]=Value
                     }                    
@@ -406,9 +512,13 @@ function AssignLeftCapacity(Job,Slot,Title,Value){
 
 function GetIndexofAsked(Job,Title){
     index=GetIndex(Job)
+    //console.log("index")
+    //console.log(index)
     let currarray=[]
     for(var i=0;i<NumberOfPawn;i++){
-        if(TitleofPawns[i][index]==Title&&Priorty1Occupation[i]!=1){//&&Priorty1Occupation[i]!=1
+        if(AssignedJobsofPawns[i][index]==Title&&Priorty1Occupation[i]!=1){//&&Priorty1Occupation[i]!=1
+            //console.log("AssignedJobsofPawns[i][index]")
+            //console.log(AssignedJobsofPawns[i][index])
             currarray.push(i)
         }
     }
@@ -460,12 +570,72 @@ function Grader(Array){
 }
 //import from tablescript.js
 
+//if a pawn has a priorty 1 job this function will delete the priorty 2 job from its assaigned job list
+function Priorty2_Deleter(){
+    let currarray=[]
+    for(var i=0;i<NumberOfPawn;i++){
+        if(Priorty1Occupation[i]==1){
+            //console.log("------------------------------------------------------------")
+            for(var j=0;j<Priorty2_JobList.length;j++){
+                //console.log("Here2")
+                index=GetIndex(Priorty2_JobList[j])
+                //console.log("index")
+                //console.log(index)
+                AssignedJobsofPawns[i][index]=0
+            }
+        }
+    }
+}
+
+function PawnsAssignedJobCounter(value){
+    let sum=0
+    let currobject={}
+    for(var i=0;i<NumberOfPawn;i++){
+        for(var j=0;j<NumberofJobs;j++){
+            if(AssignedJobsofPawns[i][j]==value){
+                sum=sum+1
+            }           
+        }
+        currobject[i]=sum
+        sum=0
+    }        
+    return currobject
+}
+
 
 
 function JobRunOrdered(){
     Cook()
     Crafting()
     Researching()
+    Priorty1CountedperPawn=JSON.parse(JSON.stringify(PawnsAssignedJobCounter(1)))
+    Priorty2_Deleter()
+    Constructing()
+    Priorty2CountedperPawn=JSON.parse(JSON.stringify(PawnsAssignedJobCounter(2)))
+    Growing()
+    Priorty2CountedperPawn=JSON.parse(JSON.stringify(PawnsAssignedJobCounter(2)))
+    Mineing()
+    Priorty2CountedperPawn=JSON.parse(JSON.stringify(PawnsAssignedJobCounter(2)))
+    Planting()
+    Priorty2CountedperPawn=JSON.parse(JSON.stringify(PawnsAssignedJobCounter(2)))
+    Smithing()
+    Priorty2CountedperPawn=JSON.parse(JSON.stringify(PawnsAssignedJobCounter(2)))
+    Tailoring()
+    Priorty2CountedperPawn=JSON.parse(JSON.stringify(PawnsAssignedJobCounter(2)))
+    Wardening()
+    Priorty3CountedperPawn=JSON.parse(JSON.stringify(PawnsAssignedJobCounter(3)))
+    Handleing()
+    Priorty3CountedperPawn=JSON.parse(JSON.stringify(PawnsAssignedJobCounter(3)))
+    Hunting()
+    Priorty3CountedperPawn=JSON.parse(JSON.stringify(PawnsAssignedJobCounter(3)))
+    Arting()
+    Priorty3CountedperPawn=JSON.parse(JSON.stringify(PawnsAssignedJobCounter(3)))
+    Hauling()
+    Cleaning()
+    Priorty4CountedperPawn=JSON.parse(JSON.stringify(PawnsAssignedJobCounter(4)))
+    Beginner()
+
+    final_Deleter()
 }
 
 function Cook(){
@@ -497,7 +667,7 @@ function Crafting(){
     AssigningMaster(JobNow,"Upper-Intermediate_Flame",1)
     CraftCounted[0]=AssignedCounter(JobNow,1,1)
 
-    if(CookCounted[0]<CapacityArray[GetIndex(JobNow)]){
+    if(CraftCounted[0]<CapacityArray[GetIndex(JobNow)]){
         Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-CraftCounted[0],"Upper-Intermediate",1)
         //console.log("Result")
         //console.log(Result)
@@ -521,7 +691,7 @@ function Researching(){
     AssigningMaster(JobNow,"Upper-Intermediate_Flame",1)
     ResearchCounted[0]=AssignedCounter(JobNow,1,1)
 
-    if(CookCounted[0]<CapacityArray[GetIndex(JobNow)]){
+    if(ResearchCounted[0]<CapacityArray[GetIndex(JobNow)]){
         Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ResearchCounted[0],"Upper-Intermediate",1)
         //console.log("Result")
         //console.log(Result)
@@ -540,3 +710,444 @@ function Researching(){
     }
 }
 
+function Constructing(){
+    let JobNow="Construct"
+    AssigningMaster(JobNow,"Upper-Intermediate_Flame",2)
+    ConstructCounted[0]=AssignedCounter(JobNow,2,0)
+
+    if(ConstructCounted[0]<CapacityArray[GetIndex(JobNow)]){
+        Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ConstructCounted[0],"Upper-Intermediate",2)
+        //console.log("Result")
+        //console.log(Result)
+        if(Result==0){
+            ConstructCounted[0]=AssignedCounter(JobNow,2,0)
+            //console.log("Here2")
+            Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ConstructCounted[0],"Intermediate",2)
+            ConstructCounted[0]=AssignedCounter(JobNow,2,0)
+            //console.log("Result")
+            //console.log(Result)
+            if(Result==0){
+                ConstructCounted[0]=AssignedCounter(JobNow,2,0)
+                //console.log("Here5")
+                Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ConstructCounted[0],"Beginner",2)
+                ConstructCounted[0]=AssignedCounter(JobNow,2,0)
+            }
+        }
+    }
+}
+
+function Growing(){
+    let JobNow="Grow"
+    AssigningMaster(JobNow,"Upper-Intermediate_Flame",2)
+    GrowCounted[0]=AssignedCounter(JobNow,2,0)
+
+    if(GrowCounted[0]<CapacityArray[GetIndex(JobNow)]){
+        Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ConstructCounted[0],"Upper-Intermediate",2)
+        //console.log("Result")
+        //console.log(Result)
+        if(Result==0){
+            GrowCounted[0]=AssignedCounter(JobNow,2,0)
+            //console.log("Here2")
+            Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-GrowCounted[0],"Intermediate",2)
+            GrowCounted[0]=AssignedCounter(JobNow,2,0)
+            //console.log("Result")
+            //console.log(Result)
+            if(Result==0){
+                GrowCounted[0]=AssignedCounter(JobNow,2,0)
+                //console.log("Here5")
+                Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-GrowCounted[0],"Beginner",2)
+                GrowCounted[0]=AssignedCounter(JobNow,2,0)
+            }
+        }
+    }
+}
+
+function Mineing(){
+    let JobNow="Mine"
+    AssigningMaster(JobNow,"Upper-Intermediate_Flame",2)
+    MineCounted[0]=AssignedCounter(JobNow,2,0)
+
+    if(MineCounted[0]<CapacityArray[GetIndex(JobNow)]){
+        Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ConstructCounted[0],"Upper-Intermediate",2)
+        //console.log("Result")
+        //console.log(Result)
+        if(Result==0){
+            MineCounted[0]=AssignedCounter(JobNow,2,0)
+            //console.log("Here2")
+            Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-MineCounted[0],"Intermediate",2)
+            MineCounted[0]=AssignedCounter(JobNow,2,0)
+            //console.log("Result")
+            //console.log(Result)
+            if(Result==0){
+                MineCounted[0]=AssignedCounter(JobNow,2,0)
+                //console.log("Here5")
+                Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-MineCounted[0],"Beginner",2)
+                MineCounted[0]=AssignedCounter(JobNow,2,0)
+            }
+        }
+    }
+}
+
+function Planting(){
+    let JobNow="Plant"
+    AssigningMaster(JobNow,"Upper-Intermediate_Flame",2)
+    PlantCounted[0]=AssignedCounter(JobNow,2,0)
+
+    if(PlantCounted[0]<CapacityArray[GetIndex(JobNow)]){
+        Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ConstructCounted[0],"Upper-Intermediate",2)
+        //console.log("Result")
+        //console.log(Result)
+        if(Result==0){
+            PlantCounted[0]=AssignedCounter(JobNow,2,0)
+            //console.log("Here2")
+            Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-PlantCounted[0],"Intermediate",2)
+            PlantCounted[0]=AssignedCounter(JobNow,2,0)
+            //console.log("Result")
+            //console.log(Result)
+            if(Result==0){
+                PlantCounted[0]=AssignedCounter(JobNow,2,0)
+                //console.log("Here5")
+                Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-PlantCounted[0],"Beginner",2)
+                PlantCounted[0]=AssignedCounter(JobNow,2,0)
+            }
+        }
+    }
+}
+
+function Smithing(){
+    let JobNow="Smith"
+    AssigningMaster(JobNow,"Upper-Intermediate_Flame",2)
+    SmithCounted[0]=AssignedCounter(JobNow,2,0)
+
+    if(SmithCounted[0]<CapacityArray[GetIndex(JobNow)]){
+        Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ConstructCounted[0],"Upper-Intermediate",2)
+        //console.log("Result")
+        //console.log(Result)
+        if(Result==0){
+            SmithCounted[0]=AssignedCounter(JobNow,2,0)
+            //console.log("Here2")
+            Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-SmithCounted[0],"Intermediate",2)
+            SmithCounted[0]=AssignedCounter(JobNow,2,0)
+            //console.log("Result")
+            //console.log(Result)
+            if(Result==0){
+                SmithCounted[0]=AssignedCounter(JobNow,2,0)
+                //console.log("Here5")
+                Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-SmithCounted[0],"Beginner",2)
+                SmithCounted[0]=AssignedCounter(JobNow,2,0)
+            }
+        }
+    }
+}
+
+function Tailoring(){
+    let JobNow="Tailor"
+    AssigningMaster(JobNow,"Upper-Intermediate_Flame",2)
+    TailorCounted[0]=AssignedCounter(JobNow,2,0)
+
+    if(TailorCounted[0]<CapacityArray[GetIndex(JobNow)]){
+        Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ConstructCounted[0],"Upper-Intermediate",2)
+        //console.log("Result")
+        //console.log(Result)
+        if(Result==0){
+            TailorCounted[0]=AssignedCounter(JobNow,2,0)
+            //console.log("Here2")
+            Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-TailorCounted[0],"Intermediate",2)
+            TailorCounted[0]=AssignedCounter(JobNow,2,0)
+            //console.log("Result")
+            //console.log(Result)
+            if(Result==0){
+                TailorCounted[0]=AssignedCounter(JobNow,2,0)
+                //console.log("Here5")
+                Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-TailorCounted[0],"Beginner",2)
+                TailorCounted[0]=AssignedCounter(JobNow,2,0)
+            }
+        }
+    }
+}
+
+function Wardening(){
+    let JobNow="Warden"
+    AssigningMaster(JobNow,"Upper-Intermediate_Flame",3)
+    WardenCounted[0]=AssignedCounter(JobNow,3,0)
+
+    if(WardenCounted[0]<CapacityArray[GetIndex(JobNow)]){
+        Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ConstructCounted[0],"Upper-Intermediate",3)
+        //console.log("Result")
+        //console.log(Result)
+        if(Result==0){
+            WardenCounted[0]=AssignedCounter(JobNow,3,0)
+            //console.log("Here2")
+            Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-WardenCounted[0],"Intermediate",3)
+            WardenCounted[0]=AssignedCounter(JobNow,3,0)
+            //console.log("Result")
+            //console.log(Result)
+            if(Result==0){
+                WardenCounted[0]=AssignedCounter(JobNow,3,0)
+                //console.log("Here5")
+                Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-WardenCounted[0],"Beginner",3)
+                WardenCounted[0]=AssignedCounter(JobNow,3,0)
+            }
+        }
+    }
+}
+
+function Handleing(){
+    let JobNow="Handle"
+    AssigningMaster(JobNow,"Upper-Intermediate_Flame",3)
+    HandleCounted[0]=AssignedCounter(JobNow,3,0)
+
+    if(HandleCounted[0]<CapacityArray[GetIndex(JobNow)]){
+        Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ConstructCounted[0],"Upper-Intermediate",3)
+        //console.log("Result")
+        //console.log(Result)
+        if(Result==0){
+            HandleCounted[0]=AssignedCounter(JobNow,3,0)
+            //console.log("Here2")
+            Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-HandleCounted[0],"Intermediate",3)
+            HandleCounted[0]=AssignedCounter(JobNow,3,0)
+            //console.log("Result")
+            //console.log(Result)
+            if(Result==0){
+                HandleCounted[0]=AssignedCounter(JobNow,3,0)
+                //console.log("Here5")
+                Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-HandleCounted[0],"Beginner",3)
+                HandleCounted[0]=AssignedCounter(JobNow,3,0)
+            }
+        }
+    }
+}
+
+function Hunting(){
+    let JobNow="Hunt"
+    AssigningMaster(JobNow,"Upper-Intermediate_Flame",3)
+    HuntCounted[0]=AssignedCounter(JobNow,3,0)
+
+    if(HuntCounted[0]<CapacityArray[GetIndex(JobNow)]){
+        Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ConstructCounted[0],"Upper-Intermediate",3)
+        //console.log("Result")
+        //console.log(Result)
+        if(Result==0){
+            HuntCounted[0]=AssignedCounter(JobNow,3,0)
+            //console.log("Here2")
+            Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-HuntCounted[0],"Intermediate",3)
+            HuntCounted[0]=AssignedCounter(JobNow,3,0)
+            //console.log("Result")
+            //console.log(Result)
+            if(Result==0){
+                HuntCounted[0]=AssignedCounter(JobNow,3,0)
+                //console.log("Here5")
+                Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-HuntCounted[0],"Beginner",3)
+                HuntCounted[0]=AssignedCounter(JobNow,3,0)
+            }
+        }
+    }
+}
+
+function Arting(){
+    let JobNow="Art"
+    AssigningMaster(JobNow,"Upper-Intermediate_Flame",3)
+    ArtCounted[0]=AssignedCounter(JobNow,3,0)
+
+    if(ArtCounted[0]<CapacityArray[GetIndex(JobNow)]){
+        Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ConstructCounted[0],"Upper-Intermediate",3)
+        //console.log("Result")
+        //console.log(Result)
+        if(Result==0){
+            ArtCounted[0]=AssignedCounter(JobNow,3,0)
+            //console.log("Here2")
+            Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ArtCounted[0],"Intermediate",3)
+            ArtCounted[0]=AssignedCounter(JobNow,3,0)
+            //console.log("Result")
+            //console.log(Result)
+            if(Result==0){
+                ArtCounted[0]=AssignedCounter(JobNow,3,0)
+                //console.log("Here5")
+                Result=AssignLeftCapacity(JobNow,CapacityArray[GetIndex(JobNow)]-ArtCounted[0],"Beginner",3)
+                ArtCounted[0]=AssignedCounter(JobNow,3,0)
+            }
+        }
+    }
+}
+
+function Hauling(){
+    let JobNow="Haul"
+    let Total=[]
+    Total=Counted_Sum()
+    //console.log("Total")
+    //console.log(Total)
+    AssigningHaulClean(JobNow,4,Total)
+}
+
+function Cleaning(){
+    let JobNow="Clean"
+    let Total=[]
+    Total=Counted_Sum()
+    //console.log("Total")
+    //console.log(Total)
+    AssigningHaulClean(JobNow,4,Total)
+}
+
+function Beginner(){
+    //JobList=["Warden","Handle","Cook","Hunt","Construct","Grow","Mine","Plant Cut","Smith","Tailor","Art","Craft","Haul","Clean","Research"]
+    for(var i=0;i<JobList.length;i++){
+        AssigningMaster(JobList[i],"Beginner",4)
+    }
+}
+
+function Counted_Sum(){
+    let a
+    let b
+    let c
+    let currarray=[]
+    for(var i=0;i<NumberOfPawn;i++){       
+        a=Priorty1CountedperPawn[i]
+        b=Priorty2CountedperPawn[i]
+        c=Priorty3CountedperPawn[i]
+        currarray[i]=a+b+c
+    }
+    return currarray
+}
+
+function AssigningHaulClean(Job,value,Total){
+    index=GetIndex(Job)
+    for(var i=0;i<NumberOfPawn;i++){       
+        if(Total[i]<JobLimitValue&&Priorty1Occupation[i]!=1){
+            AssignedJobsofPawns[i][index]=value
+        }
+    }
+}
+
+function final_Deleter(){
+    for(var i=0;i<NumberOfPawn;i++){
+        for(var j=0;j<NumberofJobs;j++){
+            if(typeof(AssignedJobsofPawns[i][j])=="string"){
+                AssignedJobsofPawns[i][j]=0
+            }
+        }
+    }
+}
+
+//çizdirme kısmı
+
+function GenerateSingleRow(Name,JobArray){
+    let Tr=document.createElement('tr')
+    Tr.classList.add('text-center')
+    Tr.classList.add('a')
+    Tbody.append(Tr)
+
+    let Th=document.createElement('th')
+    Th.setAttribute('scope','row')
+    Th.innerHTML = `${Name}`
+    Tr.append(Th)
+
+    for(let a=0;a<JobArray.length;a++){
+        let Td=document.createElement('td')
+            Tr.append(Td)
+        
+        if(JobArray[a]!=0){
+            let Input=document.createElement('input')
+            Input.classList.add('form-check-input')
+            Input.setAttribute('type','checkbox')
+            Input.setAttribute('value','')
+            Input.setAttribute('checked','')
+            Td.append(Input)
+        }
+        else if(JobArray[a]==0){
+            let Input=document.createElement('input')
+            Input.classList.add('form-check-input')
+            Input.setAttribute('type','checkbox')
+            Input.setAttribute('value','')
+            Td.append(Input)
+        }
+    }
+}
+
+function GenerateAllRows(){
+    //console.log("I was here")
+
+    let Removal=document.querySelectorAll('.a')
+
+    for(var x=0;x<Removal.length;x++){
+        Removal[x].remove(Removal.firstChild)
+        //console.log("I was here deleting")
+        }
+
+   for(let a=0;a<Object.keys(NameOfPawn).length;a++){
+    let CurName=NameOfPawn[a]
+    let CurArray=AssignedJobsofPawns[a]
+    GenerateSingleRow(CurName,CurArray)
+   } 
+}
+
+function DetailedGenerateSingleRow(Name,JobArray){
+
+    let ColorofBadge=""
+
+    let Tr=document.createElement('tr')
+    Tr.classList.add('text-center')
+    Tr.classList.add('a')
+    Tbody.append(Tr)
+
+    let Th=document.createElement('th')
+    Th.setAttribute('scope','row')
+    Th.innerHTML = `${Name}`
+    Tr.append(Th)
+
+    for(let a=0;a<JobArray.length;a++){
+        let Td=document.createElement('td')
+            Tr.append(Td)
+        
+        if(JobArray[a]!=0){
+            if(JobArray[a]==1){
+                ColorofBadge="primary"
+            }
+            else if(JobArray[a]==2){
+                ColorofBadge="success"
+            }
+            else if(JobArray[a]==3){
+                ColorofBadge="danger"
+            }
+            else if(JobArray[a]==4){
+                ColorofBadge="secondary"
+            }
+            let Text=document.createElement('span')
+            Text.classList.add('badge')
+
+            Text.classList.add(`text-bg-${ColorofBadge}`)
+            Text.appendChild( document.createTextNode(JobArray[a].toString()))
+            Td.append(Text)
+
+            //let Input=document.createElement('input')
+            //Input.classList.add('form-check-input')
+            //Input.setAttribute('type','checkbox')
+            //Input.setAttribute('value','')
+            //Input.setAttribute('checked','')
+            //Td.append(Input)
+        }
+        else if(JobArray[a]==0){
+            let Input=document.createElement('input')
+            Input.classList.add('form-check-input')
+            Input.setAttribute('type','checkbox')
+            Input.setAttribute('value','')
+            Td.append(Input)
+        }
+    }
+}
+
+function DetailedGenerateAllRows(){
+    //console.log("I was here")
+
+    let Removal=document.querySelectorAll('.a')
+
+    for(var x=0;x<Removal.length;x++){
+        Removal[x].remove(Removal.firstChild)
+        //console.log("I was here deleting")
+        }
+
+   for(let a=0;a<Object.keys(NameOfPawn).length;a++){
+    let CurName=NameOfPawn[a]
+    let CurArray=AssignedJobsofPawns[a]
+    DetailedGenerateSingleRow(CurName,CurArray)
+   }  
+}
