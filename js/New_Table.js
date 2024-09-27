@@ -86,7 +86,7 @@ All()
 
 
 function All(){
-    console.log("Here")
+    //console.log("Here")
     
     //AssignerInitializer()
     Priorty1Creator()
@@ -1150,4 +1150,667 @@ function DetailedGenerateAllRows(){
     let CurArray=AssignedJobsofPawns[a]
     DetailedGenerateSingleRow(CurName,CurArray)
    }  
+}
+
+
+//Simulation
+
+let Warden_Load=2 //Number of pawn in custody
+let Warden_ProgressInHour=0.2
+let Warden_SequencesInHour=2
+let Warden_CooldownTimeInHour=4
+let Warden_StartingTime=8
+let Warden_StartingType=1
+let Warden_Slot=Warden_Load
+
+let Warden_Calculated_Load=HowItWillTakeforOnePawn(Warden_Load,Warden_ProgressInHour)
+
+let Simulation_Warden={
+    "Index":0,
+    "Load":Warden_Load,
+    "ProgressInHour":Warden_ProgressInHour,
+    "SequencesInHour":Warden_SequencesInHour,
+    "CooldownTimeInHour":Warden_CooldownTimeInHour,
+    "StartingTime":Warden_StartingTime,
+    "StartingType":Warden_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Warden_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Warden_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Handle_Load=2   //Number of animal that will be tamed
+let Handle_ProgressInHour=0.4
+let Handle_SequencesInHour=4
+let Handle_CooldownTimeInHour=6
+let Handle_StartingTime=8
+let Handle_StartingType=0
+let Handle_Slot=Handle_Load
+
+let Handle_Calculated_Load=HowItWillTakeforOnePawn(Handle_Load,Handle_ProgressInHour)
+
+let Simulation_Handle={
+    "Index":1,
+    "Load":Handle_Load,
+    "ProgressInHour":Handle_ProgressInHour,
+    "SequencesInHour":Handle_SequencesInHour,
+    "CooldownTimeInHour":Handle_CooldownTimeInHour,
+    "StartingTime":Handle_StartingTime,
+    "Starting type":Handle_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Handle_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Handle_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Cook_Load=30 //Number of meal need to be done
+let Cook_ProgressInHour=4
+let Cook_SequencesInHour=8
+let Cook_CooldownTimeInHour=0
+let Cook_StartingTime=8
+let Cook_StartingType=1
+let Cook_Slot=3
+
+let Cook_Calculated_Load=HowItWillTakeforOnePawn(Cook_Load,Cook_ProgressInHour)
+
+let Simulation_Cook={
+    "Index":2,
+    "Load":Cook_Load,
+    "ProgressInHour":Cook_ProgressInHour,
+    "SequencesInHour":Cook_SequencesInHour,
+    "CooldownTimeInHour":Cook_CooldownTimeInHour,
+    "StartingTime":Cook_StartingTime,
+    "Starting type":Cook_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Cook_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Cook_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Hunt_Load=8 //Number of animal will be killed
+let Hunt_ProgressInHour=1
+let Hunt_SequencesInHour=6
+let Hunt_CooldownTimeInHour=0
+let Hunt_StartingTime=8
+let Hunt_StartingType=1
+let Hunt_Slot=Hunt_Load
+
+let Hunt_Calculated_Load=HowItWillTakeforOnePawn(Hunt_Load,Hunt_ProgressInHour)
+
+let Simulation_Hunt={
+    "Index":3,
+    "Load":Hunt_Load,
+    "ProgressInHour":Hunt_ProgressInHour,
+    "SequencesInHour":Hunt_SequencesInHour,
+    "CooldownTimeInHour":Hunt_CooldownTimeInHour,
+    "StartingTime":Hunt_StartingTime,
+    "Starting type":Hunt_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Hunt_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Hunt_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Construct_Load=50 //Number of tiles will be build
+let Construct_ProgressInHour=4
+let Construct_SequencesInHour=8
+let Construct_CooldownTimeInHour=0
+let Construct_StartingTime=8
+let Construct_StartingType=1
+let Construct_Slot=Construct_Load
+
+let Construct_Calculated_Load=HowItWillTakeforOnePawn(Construct_Load,Construct_ProgressInHour)
+
+let Simulation_Construct={
+    "Index":4,
+    "Load":Construct_Load,
+    "ProgressInHour":Construct_ProgressInHour,
+    "SequencesInHour":Construct_SequencesInHour,
+    "CooldownTimeInHour":Construct_CooldownTimeInHour,
+    "StartingTime":Construct_StartingTime,
+    "Starting type":Construct_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Construct_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Construct_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Grow_Load=400 //Number of tiles need to be taken care of
+let Grow_ProgressInHour=10
+let Grow_SequencesInHour=8
+let Grow_CooldownTimeInHour=0
+let Grow_StartingTime=8
+let Grow_StartingType=1
+let Grow_Slot=Grow_Load
+
+let Grow_Calculated_Load=HowItWillTakeforOnePawn(Grow_Load,Grow_ProgressInHour)
+
+let Simulation_Grow={
+    "Index":5,
+    "Load":Grow_Load,
+    "ProgressInHour":Grow_ProgressInHour,
+    "SequencesInHour":Grow_SequencesInHour,
+    "CooldownTimeInHour":Grow_CooldownTimeInHour,
+    "StartingTime":Grow_StartingTime,
+    "Starting type":Grow_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Grow_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Grow_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Mine_Load=100 //Number of tiles need to be mined
+let Mine_ProgressInHour=4
+let Mine_SequencesInHour=6
+let Mine_CooldownTimeInHour=2
+let Mine_StartingTime=8
+let Mine_StartingType=1
+let Mine_Slot=Mine_Load
+
+let Mine_Calculated_Load=HowItWillTakeforOnePawn(Mine_Load,Mine_ProgressInHour)
+
+let Simulation_Mine={
+    "Index":6,
+    "Load":Mine_Load,
+    "ProgressInHour":Mine_ProgressInHour,
+    "SequencesInHour":Mine_SequencesInHour,
+    "CooldownTimeInHour":Mine_CooldownTimeInHour,
+    "StartingTime":Mine_StartingTime,
+    "Starting type":Mine_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Mine_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Mine_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Plant_Load=60 //Plants need to be cut
+let Plant_ProgressInHour=2
+let Plant_SequencesInHour=4
+let Plant_CooldownTimeInHour=2
+let Plant_StartingTime=8
+let Plant_StartingType=1
+let Plant_Slot=Plant_Load
+
+let Plant_Calculated_Load=HowItWillTakeforOnePawn(Plant_Load,Plant_ProgressInHour)
+
+let Simulation_Plant={
+    "Index":7,
+    "Load":Plant_Load,
+    "ProgressInHour":Plant_ProgressInHour,
+    "SequencesInHour":Plant_SequencesInHour,
+    "CooldownTimeInHour":Plant_CooldownTimeInHour,
+    "StartingTime":Plant_StartingTime,
+    "Starting type":Plant_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Plant_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Plant_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Smith_Load=10 //Items wait in line
+let Smith_ProgressInHour=0.5
+let Smith_SequencesInHour=4
+let Smith_CooldownTimeInHour=4
+let Smith_StartingTime=8
+let Smith_StartingType=1
+let Smith_Slot=2
+
+let Smith_Calculated_Load=HowItWillTakeforOnePawn(Smith_Load,Smith_ProgressInHour)
+
+let Simulation_Smith={
+    "Index":8,
+    "Load":Smith_Load,
+    "ProgressInHour":Smith_ProgressInHour,
+    "SequencesInHour":Smith_SequencesInHour,
+    "CooldownTimeInHour":Smith_CooldownTimeInHour,
+    "StartingTime":Smith_StartingTime,
+    "Starting type":Smith_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Smith_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Smith_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Tailor_Load=8 //Number of clothes need to be created
+let Tailor_ProgressInHour=0.2
+let Tailor_SequencesInHour=2
+let Tailor_CooldownTimeInHour=4
+let Tailor_StartingTime=8
+let Tailor_StartingType=1
+let Tailor_Slot=1
+
+let Tailor_Calculated_Load=HowItWillTakeforOnePawn(Tailor_Load,Tailor_ProgressInHour)
+
+let Simulation_Tailor={
+    "Index":9,
+    "Load":Tailor_Load,
+    "ProgressInHour":Tailor_ProgressInHour,
+    "SequencesInHour":Tailor_SequencesInHour,
+    "CooldownTimeInHour":Tailor_CooldownTimeInHour,
+    "StartingTime":Tailor_StartingTime,
+    "Starting type":Tailor_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Tailor_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Tailor_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Art_Load=6 //Number of statue in line
+let Art_ProgressInHour=0.5
+let Art_SequencesInHour=4
+let Art_CooldownTimeInHour=4
+let Art_StartingTime=8
+let Art_StartingType=1
+let Art_Slot=1
+
+let Art_Calculated_Load=HowItWillTakeforOnePawn(Art_Load,Art_ProgressInHour)
+
+let Simulation_Art={
+    "Index":10,
+    "Load":Art_Load,
+    "ProgressInHour":Art_ProgressInHour,
+    "SequencesInHour":Art_SequencesInHour,
+    "CooldownTimeInHour":Art_CooldownTimeInHour,
+    "StartingTime":Art_StartingTime,
+    "Starting type":Art_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Art_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Art_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Craft_Load=20 //Number of component in line
+let Craft_ProgressInHour=0.2
+let Craft_SequencesInHour=8
+let Craft_CooldownTimeInHour=0
+let Craft_StartingTime=8
+let Craft_StartingType=1
+let Craft_Slot=2
+
+let Craft_Calculated_Load=HowItWillTakeforOnePawn(Craft_Load,Craft_ProgressInHour)
+
+let Simulation_Craft={
+    "Index":11,
+    "Load":Craft_Load,
+    "ProgressInHour":Craft_ProgressInHour,
+    "SequencesInHour":Craft_SequencesInHour,
+    "CooldownTimeInHour":Craft_CooldownTimeInHour,
+    "StartingTime":Craft_StartingTime,
+    "Starting type":Craft_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Craft_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Craft_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Haul_Load=200 //Number of item need to be hauled
+let Haul_ProgressInHour=4
+let Haul_SequencesInHour=2
+let Haul_CooldownTimeInHour=4
+let Haul_StartingTime=8
+let Haul_StartingType=1
+let Haul_Slot=Haul_Load
+
+let Haul_Calculated_Load=HowItWillTakeforOnePawn(Haul_Load,Haul_ProgressInHour)
+
+let Simulation_Haul={
+    "Index":12,
+    "Load":Haul_Load,
+    "ProgressInHour":Haul_ProgressInHour,
+    "SequencesInHour":Haul_SequencesInHour,
+    "CooldownTimeInHour":Haul_CooldownTimeInHour,
+    "StartingTime":Haul_StartingTime,
+    "Starting type":Haul_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Haul_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Haul_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Clean_Load=60 //Number of tiles need to be cleaned
+let Clean_ProgressInHour=10
+let Clean_SequencesInHour=2
+let Clean_CooldownTimeInHour=4
+let Clean_StartingTime=8
+let Clean_StartingType=1
+let Clean_Slot=Clean_Load
+
+let Clean_Calculated_Load=HowItWillTakeforOnePawn(Clean_Load,Clean_ProgressInHour)
+
+let Simulation_Clean={
+    "Index":13,
+    "Load":Clean_Load,
+    "ProgressInHour":Clean_ProgressInHour,
+    "SequencesInHour":Clean_SequencesInHour,
+    "CooldownTimeInHour":Clean_CooldownTimeInHour,
+    "StartingTime":Clean_StartingTime,
+    "Starting type":Clean_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Clean_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Clean_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Research_Load=2000 //Number of points need to be completed
+let Research_ProgressInHour=20
+let Research_SequencesInHour=6
+let Research_CooldownTimeInHour=2
+let Research_StartingTime=8
+let Research_StartingType=1
+let Research_Slot=2
+
+let Research_Calculated_Load=HowItWillTakeforOnePawn(Research_Load,Research_ProgressInHour)
+
+let Simulation_Research={
+    "Index":14,
+    "Load":Research_Load,
+    "ProgressInHour":Research_ProgressInHour,
+    "SequencesInHour":Research_SequencesInHour,
+    "CooldownTimeInHour":Research_CooldownTimeInHour,
+    "StartingTime":Research_StartingTime,
+    "Starting type":Research_StartingType, //1 is start without cooldown, 0 start with cooldown
+    "SlotofJob":Research_Slot, //How many pawn can do it at the same time
+    "Calculated_Load":Research_Calculated_Load //Calculated time of if one pawn would have done that job
+}
+
+let Simulation_Inputs={
+    "0": Simulation_Warden,
+    "1": Simulation_Handle,
+    "2": Simulation_Cook, 
+    "3": Simulation_Hunt,
+    "4": Simulation_Construct,
+    "5": Simulation_Grow,
+    "6": Simulation_Mine,
+    "7": Simulation_Plant,
+    "8": Simulation_Smith,
+    "9": Simulation_Tailor,
+    "10": Simulation_Art,
+    "11": Simulation_Craft,
+    "12": Simulation_Haul,
+    "13": Simulation_Clean,
+    "14": Simulation_Research
+}
+
+function HowItWillTakeforOnePawn(Load,ProgressInHour){
+  return Load/ProgressInHour
+}
+
+let Schedule_Days=2 //Customer input of how my days will be simulated
+let Schedule_Hours=23 //Internal calibration - how many hours a day will be
+let Schedule_Starting_Time=8 //The time pawns start working
+let Schedule_Finishing_Time=20 //The time pawns finish working
+
+let Schedule_Days_Array=Schedule_day_and_hour_array(Schedule_Days,Schedule_Hours,1)
+let Schedule_Hours_Array=Schedule_day_and_hour_array(Schedule_Days,Schedule_Hours,2)
+
+let Schedule_Occupation=[]
+let Schedule_Occupation_Counter=[]
+let Schedule_Load=[]
+let Schedule_Occupation_Log=[]
+let Schedule_Load_Log=[]
+let Schedule_Empty=[]
+let Schedule_is_Done=[]
+
+function Schedule_day_and_hour_array(Day,Hour,Value){
+    let currarray=[]
+    for(var i=1;i<Day+1;i++){
+        for(var j=0;j<Hour+1;j++){
+            if(Value==1){
+                currarray.push(i)
+            }
+            else if(Value==2){
+                currarray.push(j)
+            }
+        }
+    }
+    return currarray
+}
+
+Schedule_Initilization()
+
+function Schedule_Initilization(){
+    Schedule_Occupation_Counter_Func()
+    Schedule_Occupation=Schedule_Occupation_Array_Initial_Creator()
+    for(var i=0;i<NumberOfPawn;i++){
+        Schedule_Occupation_Assigning(Schedule_Occupation_Checker(Schedule_Occupation,i),1)
+    }
+    for(var i=0;i<NumberOfPawn;i++){
+        Schedule_Occupation_Assigning(Schedule_Occupation_Checker(Schedule_Occupation,i),2)
+    }
+    for(var i=0;i<NumberOfPawn;i++){
+        Schedule_Occupation_Assigning(Schedule_Occupation_Checker(Schedule_Occupation,i),3)
+    }
+    for(var i=0;i<NumberOfPawn;i++){
+        Schedule_Occupation_Assigning(Schedule_Occupation_Checker(Schedule_Occupation,i),4)
+    }
+    Schedule_Load_Func()
+    Schedule_Empty=Schedule_Empty_Array(NumberOfPawn)
+    Schedule_Empty_is_Done=Schedule_Empty_Array(NumberofJobs)   
+}
+
+function Schedule_Occupation_Counter_Func(){
+    if(Schedule_Occupation_Counter.length==0){
+        let currarray=[]
+        for(var i=0;i<NumberofJobs;i++){
+            currarray[i]=Simulation_Inputs[i].SlotofJob
+        }
+        Schedule_Occupation_Counter=JSON.parse(JSON.stringify(currarray))
+    }
+    else{}
+    //console.log("Here")
+}
+
+function Schedule_Occupation_Array_Initial_Creator(NumberofPawn){
+    let currarray=[]
+    for(var i=0;i<NumberOfPawn;i++){
+        currarray.push(0)
+    }
+    return currarray
+}
+
+function Schedule_Occupation_Checker(Occupation,index){
+        if(Occupation[index]==0){           
+            return index
+        }
+        else{
+            return -1
+        }
+    
+}
+
+function Schedule_Occupation_Assigning(index,value){
+    if(index!=-1){
+        for(var i=0;i<NumberofJobs;i++){
+            if(AssignedJobsofPawns[index][i]==value&&Schedule_Occupation_Counter[i]>0&&Schedule_is_Done[i]!=1){ 
+                Schedule_Occupation_Counter[i]-- 
+                Schedule_Occupation[index]=Schedule_Get_Job(i)       
+            }          
+        }
+    }
+}
+
+function Schedule_Occupation_Assigning_for_All_Pawn(){
+    for(var i=0;i<NumberOfPawn;i++){
+        Schedule_Occupation_Assigning(Schedule_Occupation_Checker(Schedule_Occupation,i),1)
+    }
+}
+
+//Tool
+function Schedule_Get_Job(indexofJob){
+    for(var i=0;i<JobList.length;i++){
+        if(i==indexofJob){
+            return JobList[i]
+        }
+    }
+}
+//Tool
+
+function Schedule_Load_Func(){
+    let Name_Job=""
+    let IndexofName_Job=0
+    for(var i=0;i<Schedule_Occupation.length;i++){
+        Name_Job=Schedule_Occupation[i]
+        if(Name_Job!=0){
+            IndexofName_Job=GetIndex(Name_Job)
+            Schedule_Load[i]=JSON.parse(JSON.stringify(Simulation_Inputs[IndexofName_Job].Load)) 
+        }
+        else{
+            Schedule_Load[i]=0
+        }     
+    }
+}
+
+function Schedule_Empty_Array(Size){
+    let currarray=[]
+    for(var i=0;i<Size;i++){
+        currarray[i]=0
+    }
+    return currarray
+}
+
+
+Schedule_Sim_Run()
+//Simulation Run
+function Schedule_Sim_Run(){
+    for(var i=0;i<Schedule_Hours_Array.length;i++){
+        /*
+        console.log("Day")
+        console.log(Schedule_Days_Array[i])
+        console.log("Hour")
+        console.log(Schedule_Hours_Array[i])
+        */
+        console.log("i")
+        console.log(i)
+        console.log("Schedule_Hours_Array[i]")
+        console.log(Schedule_Hours_Array[i])
+        
+        console.log("--------------------------------------------------------------------------")
+
+        
+        if(Schedule_Hours_Array[i]<Schedule_Starting_Time){
+            Schedule_Occupation_Log[i]=Schedule_Empty
+            Schedule_Load_Log[i]=Schedule_Empty
+            console.log("here1")
+        }
+        else if(Schedule_Hours_Array[i]==Schedule_Starting_Time&&Schedule_Days_Array[i]!=1){
+            Schedule_Occupation_Log[i-(Schedule_Finishing_Time-Schedule_Starting_Time)]
+            Schedule_Occupation_Log[i]=JSON.parse(JSON.stringify(Schedule_Occupation_Log[i-(Schedule_Finishing_Time-Schedule_Starting_Time)]))
+            Schedule_Load_Log[i]=JSON.parse(JSON.stringify(Schedule_Load_Log[i-(Schedule_Finishing_Time-Schedule_Starting_Time)]))
+            console.log("here2")
+        }
+        else if(Schedule_Hours_Array[i]==Schedule_Starting_Time&&Schedule_Days_Array[i]==1){
+            Schedule_Occupation_Log[i]=JSON.parse(JSON.stringify(Schedule_Occupation))
+            Schedule_Load_Log[i]=JSON.parse(JSON.stringify(Schedule_Load))
+            //console.log("Schedule_Load_Log[i]")
+            //console.log(Schedule_Load_Log[i])
+            console.log("here3")
+        }
+        else if(Schedule_Hours_Array[i]>=Schedule_Starting_Time&&Schedule_Hours_Array[i]<=Schedule_Finishing_Time){
+            
+            Schedule_Load_Log[i]=Schedule_Decrease_Load(Schedule_Load_Log[i-1],Schedule_Occupation_Log[i-1],i-1)
+            Schedule_Occupation_Log[i]=Schedule_Decrease_Occupation(Schedule_Load_Log[i],Schedule_Occupation_Log[i-1],i-1)
+            //console.log("Schedule_Occupation_Log[i]")
+            //console.log(Schedule_Occupation_Log[i])
+            Schedule_Load_Log[i]=Schedule_Load_Reassigning_After_Occu_Change()
+            console.log("here4")
+        } 
+        else if(Schedule_Hours_Array[i]>Schedule_Finishing_Time){
+            Schedule_Occupation_Log[i]=Schedule_Empty
+            Schedule_Load_Log[i]=Schedule_Empty
+            console.log("here5")
+        }
+
+    }
+}
+
+function Schedule_Decrease_Load(Previous_Log,Previous_Occup_Log,PreviousIndex){
+    let DecreaseValue=0
+    let JobName=""
+    let currarray=[]
+    //console.log("here2")
+    //console.log("PreviousIndex")
+        //console.log(PreviousIndex)
+    for(var i=0;i<Previous_Log.length;i++){
+        //console.log("i")
+        //console.log(i)
+        JobName=Previous_Occup_Log[i]
+        //console.log("JobName")
+        //console.log(JobName)
+        if(JobName!=0){
+            JobIndex=GetIndex(JobName)
+            //console.log("JobIndex")
+            //console.log(JobIndex)
+            Factor=FactorFinding(JobName,Previous_Occup_Log)
+            currarray[i]=Previous_Log[i]-(Simulation_Inputs[JobIndex].ProgressInHour*Factor)
+            //console.log("currarray[i]")
+            //console.log(currarray[i])
+            //console.log("---------------------------------------------")
+        }
+        else{
+            currarray[i]=0
+        }
+        
+    }
+    return currarray
+}
+
+function Schedule_Decrease_Occupation(Current_Load_Log,Previous_Occup_Log,PreviousIndex){
+    let currarray=[]
+    for(var i=0;i<Current_Load_Log.length;i++){
+        if(Current_Load_Log[i]>0){
+            currarray[i]=JSON.parse(JSON.stringify(Previous_Occup_Log[i]))
+        }
+        else if(Current_Load_Log[i]==0||Current_Load_Log[i]<0){
+            currarray[i]=0
+            Schedule_is_Done[GetIndex(Previous_Occup_Log[i])]=1
+            
+            currarray[i]=Schedule_New_Job_Assigning(i,currarray)
+        }
+    }
+    return currarray
+}
+
+function FactorFinding(JobName,Previous_Occup_Log){
+    let sum=0
+    for(var i=0;i<Previous_Occup_Log.length;i++){
+        if(Previous_Occup_Log[i]==JobName){
+            sum++
+        }
+    }
+    return sum
+}
+
+function Schedule_New_Job_Assigning(IndexOfPawn,currarray){
+    let Job=""
+    Job=Schedule_Occupation_Assigning_Log(Schedule_Occupation_Checker(currarray,IndexOfPawn),1)
+    if(Job!=0){
+        return Job
+    }
+    else{
+        Job=Schedule_Occupation_Assigning_Log(Schedule_Occupation_Checker(currarray,IndexOfPawn),2)
+        if(Job!=0){
+            return Job
+        }
+        else{
+            Job=Schedule_Occupation_Assigning_Log(Schedule_Occupation_Checker(currarray,IndexOfPawn),3)
+            if(Job!=0){
+                return Job
+            }
+            else{
+                Schedule_Occupation_Assigning_Log(Schedule_Occupation_Checker(currarray,IndexOfPawn),4)
+                if(Job!=0){
+                    return Job
+                }
+                else{
+                    return 0
+                }
+            }
+        }
+    }  
+}
+
+function Schedule_Occupation_Assigning_Log(index,value){
+    let Job=""
+    if(index!=-1){
+        for(var i=0;i<NumberofJobs;i++){
+            if(AssignedJobsofPawns[index][i]==value&&Schedule_Occupation_Counter[i]>0&&Schedule_is_Done[i]!=1){ 
+                Schedule_Occupation_Counter[i]-- 
+                Job=Schedule_Get_Job(i)       
+            }          
+        }
+        return Job
+    }
+}
+
+function Schedule_Load_Reassigning_After_Occu_Change(New_Occu_Log,Old_Occu_Log,Load_Log){
+    let currLoad=0
+    for(var i=0;i<NumberofJobs;i++){
+        for(var j=0;j<NumberofJobs;j++){
+            if(Schedule_Occupation_Log[i][j]==Schedule_Change_Picking(New_Occu_Log,Old_Occu_Log)){
+                
+            }
+        }
+    }
+
+
+}
+
+function Schedule_Change_Picking(New_Occu_Log,Old_Occu_Log){
+    for(var i=0;i<New_Occu_Log.length;i++){
+        if(New_Occu_Log[i]!=Old_Occu_Log[i]&&New_Occu_Log[i]!=0){
+            return New_Occu_Log[i]
+        }
+    }
 }
