@@ -1794,6 +1794,7 @@ function Schedule_Occupation_Assigning_Log(index,value){
     }
 }
 
+//to be continued
 function Schedule_Load_Reassigning_After_Occu_Change(New_Occu_Log,Old_Occu_Log,Load_Log){
     let currLoad=0
     for(var i=0;i<NumberofJobs;i++){
