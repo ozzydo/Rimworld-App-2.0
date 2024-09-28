@@ -1376,7 +1376,7 @@ let Simulation_Tailor={
 }
 
 let Art_Load=6 //Number of statue in line
-let Art_ProgressInHour=0.5
+let Art_ProgressInHour=1
 let Art_SequencesInHour=4
 let Art_CooldownTimeInHour=4
 let Art_StartingTime=8
@@ -1717,7 +1717,7 @@ function Schedule_Sim_Run(){
         }
         else if(Schedule_Hours_Array[i]>=Schedule_Starting_Time&&Schedule_Hours_Array[i]<=Schedule_Finishing_Time){
             
-            Schedule_Load_Log[i]=Schedule_Decrease_Load(Schedule_Load_Log[i-1],Schedule_Occupation_Log[i-1],1)
+            Schedule_Load_Log[i]=Schedule_Decrease_Load(Schedule_Load_Log[i-1],Schedule_Occupation_Log[i-1])
             //console.log("Schedule_Load_Log[i]")
             //console.log(Schedule_Load_Log[i])
             Schedule_Occupation_Log[i]=Schedule_Decrease_Occupation(Schedule_Load_Log[i],Schedule_Occupation_Log[i-1],i-1)
@@ -1739,7 +1739,7 @@ function Schedule_Sim_Run(){
     }
 }
 
-function Schedule_Decrease_Load(Previous_Log,Previous_Occup_Log,New_Occu_Log){
+function Schedule_Decrease_Load(Previous_Log,Previous_Occup_Log){
     let DecreaseValue=0
     let JobName=""
     let currarray=[]
@@ -1757,14 +1757,13 @@ function Schedule_Decrease_Load(Previous_Log,Previous_Occup_Log,New_Occu_Log){
             //console.log("JobIndex")
             //console.log(JobIndex)
 
-            if(Schedule_Change_Picking(New_Occu_Log,Previous_Occup_Log)==0){
+            
                 Factor=FactorFinding(JobName,Previous_Occup_Log)
                 currarray[i]=Previous_Log[i]-(Simulation_Inputs[JobIndex].ProgressInHour*Factor)
             //console.log("currarray[i]")
             //console.log(currarray[i])
             //console.log("---------------------------------------------")
-            }
-
+          
             
         }
         else{
@@ -1862,22 +1861,22 @@ function Schedule_Load_Reassigning_After_Occu_Change(New_Occu_Log,Old_Occu_Log,L
 */
 
 function Schedule_Change_Picking(New_Occu_Log,Old_Occu_Log){
-    if(New_Occu_Log==1){
-        return 0
-    }
+    let currarray=[]
     for(var i=0;i<New_Occu_Log.length;i++){
         console.log("New_Occu_Log[i]")
         console.log(New_Occu_Log[i])
         console.log("Old_Occu_Log[i]")
         console.log(Old_Occu_Log[i])
+        console.log("------------------------------------------------")  
         if(New_Occu_Log[i]!=Old_Occu_Log[i]&&New_Occu_Log[i]!=0){
-            return i
+            currarray.push(i)
         }
         else{
-            console
-            return -1
+            
+            
         }
     }
+    return currarray
 }
 
 
@@ -1886,6 +1885,7 @@ function Schedule_Decrease_Load_In_Job(Load,Occupation,Old_Occupation,Load_In_Jo
     let Name_Job=""
     let IndexofName_Job=0
     let currarray=JSON.parse(JSON.stringify(Load_In_Job))
+    let a=[]
         //console.log("currarray1")
         //console.log(currarray)
     for(var i=0;i<Occupation.length;i++){
@@ -1895,13 +1895,17 @@ function Schedule_Decrease_Load_In_Job(Load,Occupation,Old_Occupation,Load_In_Jo
             //console.log("here")
             //console.log("Schedule_Change_Picking(Occupation,Old_Occupation)")
             //console.log(Schedule_Change_Picking(Occupation,Old_Occupation))
-            if(Schedule_Change_Picking(Occupation,Old_Occupation)==i){
-                Schedule_Load_Log[Index]=JSON.parse(JSON.stringify(Load_In_Job[IndexofName_Job]))
-                console.log("i")
-                console.log(i)
-                console.log("Load[i]")
-                console.log(Load[i]) 
+            a=Schedule_Change_Picking(Occupation,Old_Occupation)
+            for(var j=0;j<a.length;j++){
+                if(a[j]==i){
+                    Schedule_Load_Log[Index][i]=JSON.parse(JSON.stringify(Load_In_Job[IndexofName_Job]))
+                    console.log("i")
+                    console.log(i)
+                    console.log("Load[i]")
+                    console.log(Load[i]) 
+                }
             }
+            
             
             currarray[IndexofName_Job]=JSON.parse(JSON.stringify(Load[i]))
             //console.log("currarray[IndexofName_Job]")
